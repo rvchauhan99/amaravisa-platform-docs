@@ -1,0 +1,4907 @@
+{
+  "title": "AmaraVisa API examples",
+  "base_url": "http://127.0.0.1:8000",
+  "generated_from": "openapi/openapi.json + route/model review",
+  "note": "Illustrative success payloads for integration. Not a production HAR. Errors typically return {\"detail\": \"...\"}.",
+  "auth": {
+    "customer": "Authorization: Bearer <customer_jwt>",
+    "staff": "Authorization: Bearer <staff_jwt>"
+  },
+  "count": 177,
+  "apis": [
+    {
+      "id": "GET /api/",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/",
+      "auth": "public",
+      "headers": {},
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "service": "Visa Consultancy API",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/admin/consultants",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/consultants",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "new.staff@example.com",
+        "password": "Test@123",
+        "full_name": "New Staff",
+        "role": "consultant",
+        "country_codes": [
+          "USA"
+        ],
+        "manager_id": null
+      },
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "country_codes": [
+          "USA"
+        ]
+      }
+    },
+    {
+      "id": "GET /api/admin/consultants",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/consultants",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "email": "staff@example.com",
+            "full_name": "Priya Shah",
+            "role": "consultant",
+            "role_name": "Consultant",
+            "menu_keys": [
+              "dashboard",
+              "pipeline",
+              "tasks",
+              "leads",
+              "clients",
+              "follow_ups"
+            ],
+            "unrestricted_scope": false,
+            "country_codes": [
+              "USA"
+            ],
+            "two_factor_enabled": false
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/admin/consultants/audit",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/consultants/audit",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "limit": 25
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "PATCH /api/admin/consultants/{cid}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/consultants/{cid}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "email": "staff@example.com",
+        "full_name": "Priya Shah",
+        "role": "consultant",
+        "country_codes": [
+          "USA"
+        ],
+        "manager_id": null,
+        "password": null
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/consultants/{cid}/activate",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/consultants/{cid}/activate",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "active": true
+      }
+    },
+    {
+      "id": "GET /api/admin/consultants/{cid}/audit",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/consultants/{cid}/audit",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {
+        "limit": 25
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "PATCH /api/admin/consultants/{cid}/countries",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/consultants/{cid}/countries",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": [
+        "USA",
+        "GBR"
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/consultants/{cid}/deactivate",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/consultants/{cid}/deactivate",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "active": false
+      }
+    },
+    {
+      "id": "PATCH /api/admin/consultants/{cid}/manager",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/consultants/{cid}/manager",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "manager_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/consultants/{cid}/reassign-and-deactivate",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/consultants/{cid}/reassign-and-deactivate",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "target_consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/consultants/{cid}/reassign-and-update-countries",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/consultants/{cid}/reassign-and-update-countries",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "target_consultant_id": "11111111-1111-4111-8111-111111111111",
+        "new_country_codes": [
+          "USA"
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/consultants/{cid}/reassign-open",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/consultants/{cid}/reassign-open",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "cid": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "to_consultant_id": "11111111-1111-4111-8111-111111111111",
+        "country_code": "USA"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/document-master",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/document-master",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "active": "sample_active",
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/admin/document-master",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/document-master",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "default_name": "Sample Name",
+        "doc_key": "sample_doc_key",
+        "default_description": "sample_default_description",
+        "default_formats_allowed": [
+          "sample_default_formats_allowed"
+        ],
+        "default_max_file_size_mb": 1,
+        "default_required": true,
+        "vault_eligible": true,
+        "is_basic": true,
+        "category": "sample_category",
+        "active": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/document-master/{master_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/document-master/{master_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "master_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "default_name": "Sample Name",
+        "default_description": "sample_default_description",
+        "default_formats_allowed": [
+          "sample_default_formats_allowed"
+        ],
+        "default_max_file_size_mb": 1,
+        "default_required": true,
+        "vault_eligible": true,
+        "is_basic": true,
+        "category": "sample_category",
+        "active": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/field-master",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/field-master",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "active": "sample_active",
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/admin/field-master",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/field-master",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "default_label": "Sample Name",
+        "field_key": "sample_field_key",
+        "default_field_type": "sample_default_field_type",
+        "default_options": [
+          "sample_default_options"
+        ],
+        "default_required": true,
+        "validation_regex": "sample_validation_regex",
+        "is_basic": true,
+        "active": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/field-master/{master_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/field-master/{master_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "master_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "default_label": "Sample Name",
+        "default_field_type": "sample_default_field_type",
+        "default_options": [
+          "sample_default_options"
+        ],
+        "default_required": true,
+        "validation_regex": "sample_validation_regex",
+        "is_basic": true,
+        "active": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "title": "Passport reissue",
+        "passport_service_type": "reissue",
+        "processing_time_days": 7
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/passport-products",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/passport-products",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "PATCH /api/admin/passport-products/{product_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/passport-products/{product_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "title": "Passport reissue",
+        "passport_service_type": "reissue",
+        "processing_time_days": 7
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/passport-products/{product_id}",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/passport-products/{product_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/admin/passport-products/{product_id}/can-publish",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/passport-products/{product_id}/can-publish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products/{product_id}/documents",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products/{product_id}/documents",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "doc_key": "sample_doc_key",
+        "doc_name": "sample_doc_name",
+        "description": "Sample note for integration testing.",
+        "required": true,
+        "formats_allowed": [
+          "sample_formats_allowed"
+        ],
+        "max_file_size_mb": 1,
+        "sample_file_url": "https://example.com/file.pdf",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products/{product_id}/documents/reorder",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products/{product_id}/documents/reorder",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "display_order": 1
+        }
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/admin/passport-products/{product_id}/documents/{doc_id}",
+      "surface": "admin",
+      "method": "DELETE",
+      "path": "/api/admin/passport-products/{product_id}/documents/{doc_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "PATCH /api/admin/passport-products/{product_id}/documents/{doc_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/passport-products/{product_id}/documents/{doc_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "doc_key": "sample_doc_key",
+        "doc_name": "sample_doc_name",
+        "description": "Sample note for integration testing.",
+        "required": true,
+        "formats_allowed": [
+          "sample_formats_allowed"
+        ],
+        "max_file_size_mb": 1,
+        "sample_file_url": "https://example.com/file.pdf",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products/{product_id}/fees",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products/{product_id}/fees",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "govt_fee": 100.0,
+        "service_fee": 100.0,
+        "currency": "INR"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products/{product_id}/fields",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products/{product_id}/fields",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "field_key": "sample_field_key",
+        "label": "Sample Name",
+        "field_type": "sample_field_type",
+        "required": true,
+        "options": [
+          "sample_options"
+        ],
+        "validation_regex": "sample_validation_regex",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/passport-products/{product_id}/fields/reorder",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/passport-products/{product_id}/fields/reorder",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "display_order": 1
+        }
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/admin/passport-products/{product_id}/fields/{field_id}",
+      "surface": "admin",
+      "method": "DELETE",
+      "path": "/api/admin/passport-products/{product_id}/fields/{field_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "field_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "PATCH /api/admin/passport-products/{product_id}/publish",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/passport-products/{product_id}/publish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/passport-products/{product_id}/unpublish",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/passport-products/{product_id}/unpublish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/roles",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/roles",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "active": "sample_active"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "slug": "admin",
+          "name": "Admin",
+          "menu_keys": [
+            "dashboard",
+            "role_master",
+            "user_master"
+          ],
+          "unrestricted_scope": true,
+          "is_system": true,
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "POST /api/admin/roles",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/roles",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "name": "Operations lead",
+        "slug": "operations-lead",
+        "menu_keys": [
+          "pipeline",
+          "tasks"
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "slug": "operations-lead",
+        "name": "Operations lead",
+        "menu_keys": [
+          "pipeline",
+          "tasks"
+        ],
+        "unrestricted_scope": false,
+        "is_system": false,
+        "active": true
+      }
+    },
+    {
+      "id": "GET /api/admin/roles/catalog",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/roles/catalog",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": [
+        {
+          "key": "dashboard",
+          "label": "Dashboard",
+          "group": "Insights",
+          "group_id": "insights"
+        },
+        {
+          "key": "pipeline",
+          "label": "Pipeline",
+          "group": "Cases",
+          "group_id": "cases"
+        },
+        {
+          "key": "role_master",
+          "label": "Role Master",
+          "group": "Admin",
+          "group_id": "admin"
+        }
+      ]
+    },
+    {
+      "id": "PATCH /api/admin/roles/{role_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/roles/{role_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "role_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "name": "Operations lead",
+        "menu_keys": [
+          "pipeline",
+          "tasks"
+        ],
+        "active": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/admin/roles/{role_id}",
+      "surface": "admin",
+      "method": "DELETE",
+      "path": "/api/admin/roles/{role_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "role_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "GET /api/admin/settings/case-number-format",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/settings/case-number-format",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/settings/case-number-format",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/settings/case-number-format",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "segments": [
+          {
+            "type": "FIXED",
+            "fixed_text": "sample_fixed_text",
+            "date_format": "DD",
+            "width": 1,
+            "reset_interval": ""
+          }
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/settings/product-catalog-status",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/settings/product-catalog-status",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "country_code": "USA",
+        "country_name": "United States",
+        "visa_type": "tourist",
+        "visa_format": "e_visa",
+        "title": "USA Tourist Visa",
+        "validity_days": 180,
+        "processing_time_days": 21,
+        "passport_min_validity_months": 6
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/visa-products",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/visa-products",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "title": "USA Tourist Visa",
+            "country_code": "USA",
+            "status": "published"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/reorder",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/reorder",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "display_order": 1
+        }
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/visa-products/{product_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/visa-products/{product_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "country_code": "USA",
+        "country_name": "United States",
+        "visa_type": "tourist",
+        "visa_format": "e_visa",
+        "title": "USA Tourist Visa",
+        "validity_days": 180,
+        "processing_time_days": 21,
+        "passport_min_validity_months": 6
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/admin/visa-products/{product_id}",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/visa-products/{product_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/admin/visa-products/{product_id}/can-publish",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/admin/visa-products/{product_id}/can-publish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/{product_id}/documents",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/{product_id}/documents",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "doc_key": "sample_doc_key",
+        "doc_name": "sample_doc_name",
+        "description": "Sample note for integration testing.",
+        "required": true,
+        "formats_allowed": [
+          "sample_formats_allowed"
+        ],
+        "max_file_size_mb": 1,
+        "sample_file_url": "https://example.com/file.pdf",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/{product_id}/documents/reorder",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/{product_id}/documents/reorder",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "display_order": 1
+        }
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/admin/visa-products/{product_id}/documents/{doc_id}",
+      "surface": "admin",
+      "method": "DELETE",
+      "path": "/api/admin/visa-products/{product_id}/documents/{doc_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "PATCH /api/admin/visa-products/{product_id}/documents/{doc_id}",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/visa-products/{product_id}/documents/{doc_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "doc_key": "sample_doc_key",
+        "doc_name": "sample_doc_name",
+        "description": "Sample note for integration testing.",
+        "required": true,
+        "formats_allowed": [
+          "sample_formats_allowed"
+        ],
+        "max_file_size_mb": 1,
+        "sample_file_url": "https://example.com/file.pdf",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/{product_id}/fees",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/{product_id}/fees",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "govt_fee": 100.0,
+        "service_fee": 100.0,
+        "currency": "INR"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/{product_id}/fields",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/{product_id}/fields",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "field_key": "sample_field_key",
+        "label": "Sample Name",
+        "field_type": "sample_field_type",
+        "required": true,
+        "options": [
+          "sample_options"
+        ],
+        "validation_regex": "sample_validation_regex",
+        "display_order": 1
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/admin/visa-products/{product_id}/fields/reorder",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/admin/visa-products/{product_id}/fields/reorder",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": [
+        {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "display_order": 1
+        }
+      ],
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/admin/visa-products/{product_id}/fields/{field_id}",
+      "surface": "admin",
+      "method": "DELETE",
+      "path": "/api/admin/visa-products/{product_id}/fields/{field_id}",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111",
+        "field_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "PATCH /api/admin/visa-products/{product_id}/publish",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/visa-products/{product_id}/publish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/admin/visa-products/{product_id}/unpublish",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/admin/visa-products/{product_id}/unpublish",
+      "auth": "staff JWT + menu",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/forgot-password",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/forgot-password",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "priya@example.com"
+      },
+      "response_status": 200,
+      "response_body": {
+        "detail": "If an account exists, a reset code has been sent."
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/forgot-password/reset",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/forgot-password/reset",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "priya@example.com",
+        "code": "123456",
+        "new_password": "NewPass@123"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/google",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/google",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "id_token": "ya29.dummy-google-id-token",
+        "mode": "login"
+      },
+      "response_status": 200,
+      "response_body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "token_type": "bearer",
+        "user": {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "email": "priya@example.com",
+          "full_name": "Priya Shah"
+        },
+        "is_new_user": false
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/login",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/login",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "priya@example.com",
+        "password": "Test@123"
+      },
+      "response_status": 200,
+      "response_body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "token_type": "bearer",
+        "user": {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "email": "priya@example.com",
+          "full_name": "Priya Shah"
+        }
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/register",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/register",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "priya@example.com",
+        "password": "Test@123",
+        "full_name": "Priya Shah",
+        "phone": "+919876543210"
+      },
+      "response_status": 200,
+      "response_body": {
+        "pending_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "email": "priya@example.com"
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/register/resend-otp",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/register/resend-otp",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "pending_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "email": "priya@example.com"
+      }
+    },
+    {
+      "id": "POST /api/auth/customer/register/verify-otp",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/auth/customer/register/verify-otp",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "pending_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "code": "123456"
+      },
+      "response_status": 200,
+      "response_body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "token_type": "bearer",
+        "user": {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "email": "priya@example.com",
+          "full_name": "Priya Shah"
+        }
+      }
+    },
+    {
+      "id": "POST /api/auth/staff/2fa/disable",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/auth/staff/2fa/disable",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "code": "123456"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "two_factor_enabled": false
+      }
+    },
+    {
+      "id": "POST /api/auth/staff/2fa/enable",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/auth/staff/2fa/enable",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "code": "123456"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "two_factor_enabled": true
+      }
+    },
+    {
+      "id": "POST /api/auth/staff/2fa/generate",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/auth/staff/2fa/generate",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "issuer": "AmaraVisa CRM"
+      },
+      "response_status": 200,
+      "response_body": {
+        "secret": "JBSWY3DPEHPK3PXP",
+        "otpauth_uri": "otpauth://totp/AmaraVisa:staff@example.com?secret=JBSWY3DPEHPK3PXP",
+        "qr_data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+      }
+    },
+    {
+      "id": "POST /api/auth/staff/login",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/auth/staff/login",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "email": "admin@visaconsult.demo",
+        "password": "Admin@123"
+      },
+      "response_status": 200,
+      "response_body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "token_type": "bearer",
+        "user": {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "email": "admin@visaconsult.demo",
+          "full_name": "Ananya Rao (Admin)",
+          "role": "admin",
+          "role_name": "Admin",
+          "menu_keys": [
+            "dashboard",
+            "pipeline",
+            "user_master",
+            "role_master"
+          ],
+          "unrestricted_scope": true,
+          "country_codes": [],
+          "two_factor_enabled": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/auth/staff/verify-2fa",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/auth/staff/verify-2fa",
+      "auth": "public",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "temp_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "code": "123456"
+      },
+      "response_status": 200,
+      "response_body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy",
+        "token_type": "bearer",
+        "user": {
+          "id": "11111111-1111-4111-8111-111111111111",
+          "email": "admin@visaconsult.demo",
+          "full_name": "Ananya Rao (Admin)",
+          "role": "admin",
+          "role_name": "Admin",
+          "menu_keys": [
+            "dashboard",
+            "pipeline",
+            "user_master",
+            "role_master"
+          ],
+          "unrestricted_scope": true,
+          "country_codes": [],
+          "two_factor_enabled": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/cases",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "visa_product_id": "11111111-1111-4111-8111-111111111111",
+        "traveler": {
+          "full_name": "Priya Shah",
+          "passport_number": "P1234567"
+        },
+        "field_values": {
+          "travel_date": "2026-10-01"
+        },
+        "document_uploads": [
+          {
+            "doc_key": "passport",
+            "file_url": "https://example.com/p.pdf",
+            "filename": "passport.pdf"
+          }
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "draft_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "id": "POST /api/cases/checkout",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/checkout",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "draft_id": "11111111-1111-4111-8111-111111111111",
+        "order_id": "order_demo_1",
+        "payment_id": "pay_demo_1",
+        "signature": "dummy_signature",
+        "outcome": "success"
+      },
+      "response_status": 200,
+      "response_body": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "case_number": "AV-2026-0001"
+      }
+    },
+    {
+      "id": "POST /api/cases/checkout/create-order",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/checkout/create-order",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "draft_id": "11111111-1111-4111-8111-111111111111",
+        "outcome": "success"
+      },
+      "response_status": 200,
+      "response_body": {
+        "mode": "mock",
+        "order_id": "order_demo_1",
+        "key_id": null,
+        "amount": 1850000,
+        "currency": "INR"
+      }
+    },
+    {
+      "id": "GET /api/cases/drafts",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/drafts",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "PATCH /api/cases/drafts/{draft_id}",
+      "surface": "customer",
+      "method": "PATCH",
+      "path": "/api/cases/drafts/{draft_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "draft_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "traveler": {
+          "key": "value"
+        },
+        "field_values": {
+          "key": "value"
+        },
+        "document_uploads": [
+          {
+            "key": "value"
+          }
+        ],
+        "step": "sample_step"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/cases/drafts/{draft_id}",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/drafts/{draft_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "draft_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/cases/my",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/my",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/cases/notifications/portal",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/notifications/portal",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/cases/webhooks/razorpay",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/webhooks/razorpay",
+      "auth": "webhook HMAC",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Razorpay-Signature": "dummy_hmac_signature"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "event": "payment.captured",
+        "payload": {
+          "payment": {
+            "entity": {
+              "id": "pay_demo_1",
+              "order_id": "order_demo_1"
+            }
+          }
+        }
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "POST /api/cases/{case_id}/documents/{doc_id}/resubmit",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/{case_id}/documents/{doc_id}/resubmit",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "file_url": "https://example.com/file.pdf",
+        "filename": "sample_filename"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/cases/{case_id}/receipt",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/{case_id}/receipt",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/cases/{case_id}/status",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/{case_id}/status",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/appointments",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/appointments",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/appointments",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/appointments",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "scheduled_at": "2026-09-08T10:00:00+00:00",
+        "lead_id": "11111111-1111-4111-8111-111111111111",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "customer_id": "11111111-1111-4111-8111-111111111111",
+        "duration_minutes": 1,
+        "mode": "in_person",
+        "notes": "Sample note for integration testing.",
+        "assigned_to": "sample_assigned_to"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/appointments/{appointment_id}/status",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/appointments/{appointment_id}/status",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "appointment_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "status": "scheduled"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/birthdays",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/birthdays",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "within": 1
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/cases",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/cases",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "stage": "docs_pending",
+        "stage_group": "sample_stage_group",
+        "country": "USA",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "sla": "sample_sla",
+        "source": "sample_source",
+        "payment_status": "sample_payment_status",
+        "on_hold": "sample_on_hold",
+        "unassigned": "sample_unassigned",
+        "decision": "sample_decision",
+        "visa_type": "sample_visa_type",
+        "case_type": "sample_case_type",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "closed_from": "sample_closed_from",
+        "closed_to": "sample_closed_to",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order",
+        "include_summary": false,
+        "include_docs": false
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "case_number": "AV-2026-0001",
+            "stage": "docs_pending",
+            "payment_status": "paid",
+            "country_code": "USA",
+            "assigned_consultant_id": "22222222-2222-4222-8222-222222222222",
+            "customer_id": "11111111-1111-4111-8111-111111111111",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/cases",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "visa_product_id": "11111111-1111-4111-8111-111111111111",
+        "customer_email": "rahul@example.com",
+        "customer_full_name": "Rahul Patel",
+        "customer_phone": "+919811122233",
+        "traveler": {
+          "full_name": "Rahul Patel"
+        },
+        "field_values": {},
+        "document_uploads": [],
+        "payment_status": "pending"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/bulk",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/bulk",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "case_ids": [
+          "sample_case_ids"
+        ],
+        "action": "reassign",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "target_stage": "docs_pending"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/cases/{case_id}",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/cases/{case_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "case_number": "AV-2026-0001",
+        "stage": "docs_pending",
+        "payment_status": "paid",
+        "country_code": "USA",
+        "assigned_consultant_id": "22222222-2222-4222-8222-222222222222",
+        "customer_id": "11111111-1111-4111-8111-111111111111",
+        "created_at": "2026-09-08T10:00:00+00:00",
+        "traveler": {
+          "full_name": "Priya Shah",
+          "passport_number": "P1234567"
+        },
+        "documents": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "doc_key": "passport",
+            "status": "received"
+          }
+        ]
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/decision",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/decision",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "outcome": "approved",
+        "note": "sample_note"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/documents/{doc_id}/reject",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/documents/{doc_id}/reject",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "reason": "Sample note for integration testing."
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/documents/{doc_id}/verify",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/documents/{doc_id}/verify",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "doc_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "note": "sample_note"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/cases/{case_id}/fields",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/cases/{case_id}/fields",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "field_key": "sample_field_key",
+        "value": "sample_value"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/notes",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/notes",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "body": "Sample note for integration testing."
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/cases/{case_id}/reassign",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/cases/{case_id}/reassign",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/cases/{case_id}/stage",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/cases/{case_id}/stage",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "target_stage": "docs_pending",
+        "note": "sample_note"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/clients",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/clients",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order",
+        "service_type": "sample_service_type",
+        "has_work": "sample_has_work",
+        "has_open_work": "sample_has_open_work"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/clients/{customer_id}",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/clients/{customer_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "customer_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/clients/{customer_id}/analytics",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/clients/{customer_id}/analytics",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "customer_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/clients/{customer_id}/history",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/clients/{customer_id}/history",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "customer_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {
+        "kind": "sample_kind",
+        "status": "new",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "page": 1,
+        "limit": 25
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/communications",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/communications",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "lead_id": "11111111-1111-4111-8111-111111111111",
+        "channel": "phone",
+        "direction": "sample_direction",
+        "status": "new",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/communications",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/communications",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "body": "Sample note for integration testing.",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "lead_id": "11111111-1111-4111-8111-111111111111",
+        "customer_id": "11111111-1111-4111-8111-111111111111",
+        "channel": "email",
+        "direction": "inbound",
+        "subject": "sample_subject",
+        "status": "new"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/consultants",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/consultants",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "country": "USA",
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "email": "staff@example.com",
+            "full_name": "Priya Shah",
+            "role": "consultant",
+            "role_name": "Consultant",
+            "menu_keys": [
+              "dashboard",
+              "pipeline",
+              "tasks",
+              "leads",
+              "clients",
+              "follow_ups"
+            ],
+            "unrestricted_scope": false,
+            "country_codes": [
+              "USA"
+            ],
+            "two_factor_enabled": false
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/invoices",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/invoices",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "overdue": "sample_overdue",
+        "amount_min": "sample_amount_min",
+        "amount_max": "sample_amount_max",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "due_from": "sample_due_from",
+        "due_to": "sample_due_to",
+        "q": "usa",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/invoices",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/invoices",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "customer_id": "22222222-2222-4222-8222-222222222222",
+        "amount": 18500.0,
+        "currency": "INR",
+        "due_date": "2026-09-20",
+        "line_items": [
+          {
+            "label": "Service fee",
+            "amount": 18500.0
+          }
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/invoices/{invoice_id}/payments",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/invoices/{invoice_id}/payments",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "invoice_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "amount": 18500.0,
+        "payment_type": "payment",
+        "method": "upi",
+        "reference": "UPI123"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/lead-follow-ups",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/lead-follow-ups",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "source": "sample_source",
+        "country": "USA",
+        "assigned_to": "sample_assigned_to",
+        "visa_type": "sample_visa_type",
+        "service_type": "sample_service_type",
+        "outcome": "interested",
+        "channel": "phone",
+        "due": "sample_due",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "next_from": "sample_next_from",
+        "next_to": "sample_next_to",
+        "contacted_from": "sample_contacted_from",
+        "contacted_to": "sample_contacted_to",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/lead-follow-ups/counts",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/lead-follow-ups/counts",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/leads",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/leads",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "source": "sample_source",
+        "country": "USA",
+        "assigned_to": "sample_assigned_to",
+        "visa_type": "sample_visa_type",
+        "service_type": "sample_service_type",
+        "outcome": "interested",
+        "due": "sample_due",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "next_from": "sample_next_from",
+        "next_to": "sample_next_to",
+        "contacted_from": "sample_contacted_from",
+        "contacted_to": "sample_contacted_to",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/leads",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/leads",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "full_name": "Rahul Patel",
+        "email": "rahul@example.com",
+        "phone": "+919811122233",
+        "country_code": "USA",
+        "source": "website",
+        "status": "new",
+        "service_type": "visa",
+        "service_details": {
+          "adults": 1,
+          "children": 0,
+          "country_code": "USA",
+          "visa_type": "tourist"
+        },
+        "lead_value": 15000.0
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/leads/batch",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/leads/batch",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "full_name": "Rahul Patel",
+        "email": "rahul@example.com",
+        "phone": "+919811122233",
+        "status": "new",
+        "services": [
+          {
+            "service_type": "visa",
+            "service_details": {
+              "country_code": "USA",
+              "adults": 1
+            }
+          },
+          {
+            "service_type": "hotel_booking",
+            "service_details": {
+              "destination": "New York",
+              "rooms": 1
+            }
+          }
+        ]
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/leads/{lead_id}",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/leads/{lead_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/leads/{lead_id}",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/leads/{lead_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "full_name": "Sample Name",
+        "email": "priya@example.com",
+        "phone": "+919876543210",
+        "alternative_phone": "+919876543210",
+        "city": "sample_city",
+        "country_code": "USA",
+        "visa_type": "sample_visa_type",
+        "source": "sample_source",
+        "notes": "Sample note for integration testing.",
+        "assigned_to": "sample_assigned_to",
+        "status": "new",
+        "service_type": "visa",
+        "service_details": {
+          "key": "value"
+        },
+        "language_preference": "sample_language_preference",
+        "lead_value": 100.0
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/leads/{lead_id}/convert",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/leads/{lead_id}/convert",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "visa_product_id": "11111111-1111-4111-8111-111111111111",
+        "traveler": {
+          "full_name": "Rahul Patel"
+        },
+        "create_case": true,
+        "create_order": true
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/leads/{lead_id}/follow-ups",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/leads/{lead_id}/follow-ups",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "channel": "phone",
+        "outcome": "follow_up",
+        "notes": "Called, will decide next week.",
+        "next_follow_up_at": "2026-09-15T10:00:00+00:00"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/leads/{lead_id}/follow-ups",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/leads/{lead_id}/follow-ups",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/leads/{lead_id}/group",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/leads/{lead_id}/group",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "lead_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/notifications",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/notifications",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "unread_only": false
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/notifications/mark-all-read",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/notifications/mark-all-read",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/notifications/unread-count",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/notifications/unread-count",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/ops/queues",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/ops/queues",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/passport-expiry",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/passport-expiry",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "days": 1
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/crm/passport-expiry/renewal-case",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/passport-expiry/renewal-case",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "customer_id": "11111111-1111-4111-8111-111111111111",
+        "passport_number": "sample_passport_number",
+        "traveler_name": "sample_traveler_name",
+        "passport_expiry_date": "2026-09-08",
+        "preferred_service": "sample_preferred_service",
+        "passport_product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/payments",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/payments",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "method": "sample_method",
+        "payment_type": "sample_payment_type",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "invoice_id": "11111111-1111-4111-8111-111111111111",
+        "country": "USA",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "q": "usa",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/qa-reviews",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/qa-reviews",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/qa-reviews",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/qa-reviews",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "checklist": [
+          "sample_checklist"
+        ],
+        "notes": "Sample note for integration testing.",
+        "outcome": "pass"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/qa-reviews/{review_id}/outcome",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/qa-reviews/{review_id}/outcome",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "review_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "outcome": "pass",
+        "notes": "Sample note for integration testing."
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/quotations",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/quotations",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/quotations",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/quotations",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "lead_id": "11111111-1111-4111-8111-111111111111",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "customer_id": "11111111-1111-4111-8111-111111111111",
+        "country_code": "USA",
+        "visa_product_id": "11111111-1111-4111-8111-111111111111",
+        "line_items": [
+          {
+            "key": "value"
+          }
+        ],
+        "currency": "INR",
+        "notes": "Sample note for integration testing."
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/quotations/{quotation_id}/status",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/quotations/{quotation_id}/status",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "quotation_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "status": "draft"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/dashboard",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/dashboard",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "stage": "docs_pending",
+        "sla": "sample_sla",
+        "payment_status": "sample_payment_status",
+        "on_hold": "sample_on_hold",
+        "unassigned": "sample_unassigned",
+        "decision": "sample_decision",
+        "visa_type": "sample_visa_type",
+        "case_type": "sample_case_type",
+        "service_type": "sample_service_type",
+        "q": "usa",
+        "granularity": "sample_granularity"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "open_cases": 12,
+        "overdue": 2,
+        "revenue": 185000,
+        "leads_new": 8,
+        "service_lanes": [
+          "visa",
+          "passport"
+        ]
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/doc-rejection-rate",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/doc-rejection-rate",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/export.csv",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/export.csv",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "stage_group": "sample_stage_group",
+        "stage": "docs_pending",
+        "decision": "sample_decision",
+        "visa_type": "sample_visa_type",
+        "payment_status": "sample_payment_status",
+        "closed_from": "sample_closed_from",
+        "closed_to": "sample_closed_to",
+        "q": "usa"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/funnel",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/funnel",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/leads",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/leads",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "source": "sample_source",
+        "country": "USA",
+        "assigned_to": "sample_assigned_to",
+        "visa_type": "sample_visa_type",
+        "service_type": "sample_service_type",
+        "outcome": "interested",
+        "due": "sample_due",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "next_from": "sample_next_from",
+        "next_to": "sample_next_to",
+        "granularity": "sample_granularity"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/payments",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/payments",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "method": "sample_method",
+        "payment_type": "sample_payment_type",
+        "country": "USA",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/payments/export.csv",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/payments/export.csv",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "method": "sample_method",
+        "payment_type": "sample_payment_type",
+        "country": "USA",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/pipeline",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/pipeline",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/receivables",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/receivables",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "status": "new",
+        "country": "USA",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/revenue",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/revenue",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/reports/sla",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/reports/sla",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "country": "USA",
+        "source": "sample_source",
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/search",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/search",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/crm/service-orders",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/service-orders",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "service_type": "sample_service_type",
+        "assigned_to": "sample_assigned_to",
+        "q": "usa",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/crm/service-orders/bulk",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/service-orders/bulk",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "order_ids": [
+          "sample_order_ids"
+        ],
+        "action": "reassign",
+        "consultant_id": "11111111-1111-4111-8111-111111111111",
+        "target_stage": "docs_pending"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/service-orders/{order_id}",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/service-orders/{order_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "order_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/service-orders/{order_id}/reassign",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/service-orders/{order_id}/reassign",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "order_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "consultant_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "PATCH /api/crm/service-orders/{order_id}/stage",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/service-orders/{order_id}/stage",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "order_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "target_stage": "docs_pending",
+        "note": "sample_note"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/tasks",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/tasks",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "description": "Sample note for integration testing.",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+        "due_date": "2026-09-08",
+        "assigned_to": "sample_assigned_to",
+        "priority": "low",
+        "category": "sample_category"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/tasks/my",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/tasks/my",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "status": "new",
+        "priority": "sample_priority",
+        "category": "sample_category",
+        "due": "sample_due",
+        "from_date": "2026-09-08",
+        "to_date": "2026-09-08",
+        "assigned_to": "sample_assigned_to",
+        "q": "usa",
+        "page": 1,
+        "limit": 25,
+        "sort_by": "sample_sort_by",
+        "sort_order": "sample_sort_order"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "PATCH /api/crm/tasks/{task_id}/done",
+      "surface": "crm",
+      "method": "PATCH",
+      "path": "/api/crm/tasks/{task_id}/done",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "task_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/crm/workload",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/workload",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "GET /api/customers/me",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "PATCH /api/customers/me",
+      "surface": "customer",
+      "method": "PATCH",
+      "path": "/api/customers/me",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "full_name": "Sample Name",
+        "phone": "+919876543210",
+        "dob": "2026-09-08",
+        "anniversary_date": "2026-09-08"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/customers/me/document-vault",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me/document-vault",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/customers/me/document-vault/by-key/{doc_key}",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me/document-vault/by-key/{doc_key}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "doc_key": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "DELETE /api/customers/me/document-vault/{vault_id}",
+      "surface": "customer",
+      "method": "DELETE",
+      "path": "/api/customers/me/document-vault/{vault_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "vault_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "GET /api/customers/me/notifications",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me/notifications",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/customers/me/notifications/mark-all-read",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/customers/me/notifications/mark-all-read",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/customers/me/traveler-profiles",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me/traveler-profiles",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "POST /api/customers/me/traveler-profiles",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/customers/me/traveler-profiles",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "full_name": "Sample Name",
+        "relationship": "sample_relationship",
+        "dob": "2026-09-08",
+        "passport_number": "sample_passport_number",
+        "passport_issue_date": "2026-09-08",
+        "passport_expiry_date": "2026-09-08",
+        "gender": "sample_gender",
+        "nationality": "sample_nationality",
+        "phone": "+919876543210",
+        "email": "priya@example.com"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/customers/me/traveler-profiles/{profile_id}",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/customers/me/traveler-profiles/{profile_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "profile_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "PATCH /api/customers/me/traveler-profiles/{profile_id}",
+      "surface": "customer",
+      "method": "PATCH",
+      "path": "/api/customers/me/traveler-profiles/{profile_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "profile_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "full_name": "Sample Name",
+        "relationship": "sample_relationship",
+        "dob": "2026-09-08",
+        "passport_number": "sample_passport_number",
+        "passport_issue_date": "2026-09-08",
+        "passport_expiry_date": "2026-09-08",
+        "gender": "sample_gender",
+        "nationality": "sample_nationality",
+        "phone": "+919876543210",
+        "email": "priya@example.com"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/customers/me/traveler-profiles/{profile_id}",
+      "surface": "customer",
+      "method": "DELETE",
+      "path": "/api/customers/me/traveler-profiles/{profile_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "profile_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "GET /api/documents/download",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/documents/download",
+      "auth": "signed token query",
+      "headers": {},
+      "path_params": {},
+      "query": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": "<binary file stream>"
+    },
+    {
+      "id": "POST /api/documents/scan-passport",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/documents/scan-passport",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "file": "<binary>",
+        "_note": "Send as multipart/form-data field named file"
+      },
+      "response_status": 200,
+      "response_body": {
+        "full_name": "RAHUL KUMAR PATEL",
+        "passport_number": "P1234567",
+        "date_of_birth": "1995-01-01",
+        "passport_issue_date": "2025-01-01",
+        "passport_expiry_date": "2035-01-01",
+        "gender": "Male",
+        "nationality": "IND",
+        "ocr_confidence": 0.97,
+        "request_id": "ocr_demo_1",
+        "warnings": []
+      }
+    },
+    {
+      "id": "POST /api/documents/staff-upload",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/documents/staff-upload",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "file": "<binary>",
+        "_note": "Send as multipart/form-data field named file"
+      },
+      "response_status": 200,
+      "response_body": {
+        "file_url": "https://example.com/signed/passport.pdf",
+        "filename": "passport.pdf"
+      }
+    },
+    {
+      "id": "POST /api/documents/upload",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/documents/upload",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "doc_key": "sample_doc_key"
+      },
+      "request_body": {
+        "file": "<binary>",
+        "_note": "Send as multipart/form-data field named file"
+      },
+      "response_status": 200,
+      "response_body": {
+        "file_url": "https://example.com/signed/passport.pdf",
+        "filename": "passport.pdf",
+        "doc_key": "passport"
+      }
+    },
+    {
+      "id": "GET /api/health",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/health",
+      "auth": "public",
+      "headers": {},
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/media/product-banner",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/media/product-banner",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "file": "<binary>",
+        "_note": "Send as multipart/form-data field named file"
+      },
+      "response_status": 200,
+      "response_body": {
+        "url": "https://cdn.example.com/banners/usa.webp"
+      }
+    },
+    {
+      "id": "GET /api/passport-products",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/passport-products",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "name": "Sample",
+            "created_at": "2026-09-08T10:00:00+00:00"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/staff/me",
+      "surface": "admin",
+      "method": "GET",
+      "path": "/api/staff/me",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "email": "staff@example.com",
+        "full_name": "Priya Shah",
+        "role": "consultant",
+        "role_name": "Consultant",
+        "menu_keys": [
+          "dashboard",
+          "pipeline",
+          "tasks",
+          "leads",
+          "clients",
+          "follow_ups"
+        ],
+        "unrestricted_scope": false,
+        "country_codes": [
+          "USA"
+        ],
+        "two_factor_enabled": false
+      }
+    },
+    {
+      "id": "PATCH /api/staff/me",
+      "surface": "admin",
+      "method": "PATCH",
+      "path": "/api/staff/me",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "full_name": "Sample Name"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/staff/me/change-password",
+      "surface": "admin",
+      "method": "POST",
+      "path": "/api/staff/me/change-password",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "current_password": "Test@123",
+        "new_password": "NewPass@123",
+        "confirm_password": "NewPass@123"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "GET /api/visa-products",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/visa-products",
+      "auth": "public",
+      "headers": {},
+      "path_params": {},
+      "query": {
+        "country": "USA",
+        "visa_type": "sample_visa_type",
+        "visa_format": "sample_visa_format",
+        "documents_profile": "sample_documents_profile",
+        "q": "usa",
+        "complexity": "sample_complexity",
+        "travel_date": "2026-09-08",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "title": "USA Tourist Visa",
+            "country_code": "USA",
+            "status": "published"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/visa-products/countries",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/visa-products/countries",
+      "auth": "public",
+      "headers": {},
+      "path_params": {},
+      "query": {
+        "q": "usa",
+        "limit": 25,
+        "offset": 0,
+        "id": "11111111-1111-4111-8111-111111111111"
+      },
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "items": [
+          {
+            "id": "11111111-1111-4111-8111-111111111111",
+            "title": "USA Tourist Visa",
+            "country_code": "USA",
+            "status": "published"
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 25,
+          "total": 1,
+          "pages": 1,
+          "has_more": false
+        }
+      }
+    },
+    {
+      "id": "GET /api/visa-products/{product_id}",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/visa-products/{product_id}",
+      "auth": "public",
+      "headers": {},
+      "path_params": {
+        "product_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    }
+  ]
+}
