@@ -57,7 +57,7 @@ A legacy CRA customer app exists at `customer-cra/` for reference only. It is no
 | File storage | Local disk or **S3-compatible** (Cloudflare R2) |
 | Payments | **Razorpay** or mock |
 | Email | **Resend** |
-| OCR | In-process **PaddleOCR** + MRZ TD3 (not Paddle Billing) |
+| OCR | In-process **MRZScanner** (DocsaidLab) + ICAO TD3; **PaddleOCR** for VIZ issue date / MRZ fallback (not Paddle Billing, not cloud ID APIs) |
 | Hosting | **GCP Cloud Run** service `passage-api`, project `amaravisa-hub`, region `asia-south1` |
 | Local URL | http://localhost:8000 |
 | Health | `GET /api/health` |

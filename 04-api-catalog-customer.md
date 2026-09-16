@@ -7,7 +7,7 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · [ReDoc](http://127
 Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md).
 
 
-**39 operations** in this catalog.
+**42 operations** in this catalog.
 
 ## other
 
@@ -38,6 +38,9 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | GET | `/api/cases/drafts` | customer JWT |  |  | List Drafts |
 | GET | `/api/cases/drafts/{draft_id}` | customer JWT |  |  | Get Draft |
 | PATCH | `/api/cases/drafts/{draft_id}` | customer JWT | CaseDraftPatchIn |  | Update Draft |
+| POST | `/api/cases/drafts/{draft_id}/travelers` | customer JWT | object |  | Add Draft Traveler |
+| DELETE | `/api/cases/drafts/{draft_id}/travelers/{traveler_id}` | customer JWT |  |  | Remove Draft Traveler |
+| GET | `/api/cases/groups/{group_id}` | customer JWT |  |  | Get My Case Group |
 | GET | `/api/cases/my` | customer JWT |  |  | My Cases |
 | GET | `/api/cases/notifications/portal` | customer JWT |  |  | Portal Notifications |
 | POST | `/api/cases/webhooks/razorpay` | webhook HMAC |  |  | Razorpay Webhook |
@@ -85,5 +88,5 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | Method | Path | Auth | Body | Query | Summary |
 |---|---|---|---|---|---|
 | GET | `/api/visa-products` | public |  | country, visa_type, visa_format, documents_profile, q, complexity, travel_date, limit, offset, id | List Public Products |
-| GET | `/api/visa-products/countries` | public |  | q, limit, offset, id | List Countries |
+| GET | `/api/visa-products/countries` | public |  | q, limit, offset, id | List Countries (full ISO-3 world list + custom `SCH` Schengen; `id` = country code) |
 | GET | `/api/visa-products/{product_id}` | public |  |  | Get Product Detail |

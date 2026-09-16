@@ -7,7 +7,7 @@
     "customer": "Authorization: Bearer <customer_jwt>",
     "staff": "Authorization: Bearer <staff_jwt>"
   },
-  "count": 177,
+  "count": 181,
   "apis": [
     {
       "id": "GET /api/",
@@ -2022,6 +2022,11 @@
         "traveler": {
           "key": "value"
         },
+        "travelers": [
+          {
+            "key": "value"
+          }
+        ],
         "field_values": {
           "key": "value"
         },
@@ -2030,7 +2035,8 @@
             "key": "value"
           }
         ],
-        "step": "sample_step"
+        "step": "sample_step",
+        "active_traveler_id": "11111111-1111-4111-8111-111111111111"
       },
       "response_status": 200,
       "response_body": {
@@ -2050,6 +2056,70 @@
       },
       "path_params": {
         "draft_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/cases/drafts/{draft_id}/travelers",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/drafts/{draft_id}/travelers",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "draft_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "key": "value"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "DELETE /api/cases/drafts/{draft_id}/travelers/{traveler_id}",
+      "surface": "customer",
+      "method": "DELETE",
+      "path": "/api/cases/drafts/{draft_id}/travelers/{traveler_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "draft_id": "11111111-1111-4111-8111-111111111111",
+        "traveler_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "ok": true
+      }
+    },
+    {
+      "id": "GET /api/cases/groups/{group_id}",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/cases/groups/{group_id}",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "group_id": "11111111-1111-4111-8111-111111111111"
       },
       "query": {},
       "request_body": null,
@@ -2302,6 +2372,26 @@
           "pages": 1,
           "has_more": false
         }
+      }
+    },
+    {
+      "id": "GET /api/crm/case-groups/{group_id}",
+      "surface": "crm",
+      "method": "GET",
+      "path": "/api/crm/case-groups/{group_id}",
+      "auth": "staff JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "group_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
       }
     },
     {
@@ -4860,29 +4950,33 @@
       "headers": {},
       "path_params": {},
       "query": {
-        "q": "usa",
-        "limit": 25,
+        "q": "ind",
+        "limit": 10,
         "offset": 0,
-        "id": "11111111-1111-4111-8111-111111111111"
+        "id": "USA"
       },
       "request_body": null,
       "response_status": 200,
       "response_body": {
         "items": [
           {
-            "id": "11111111-1111-4111-8111-111111111111",
-            "title": "USA Tourist Visa",
-            "country_code": "USA",
-            "status": "published"
+            "code": "USA",
+            "name": "United States",
+            "flag": "🇺🇸"
+          },
+          {
+            "code": "IND",
+            "name": "India",
+            "flag": "🇮🇳"
+          },
+          {
+            "code": "SCH",
+            "name": "Schengen (Europe)",
+            "flag": "🇪🇺"
           }
         ],
-        "meta": {
-          "page": 1,
-          "limit": 25,
-          "total": 1,
-          "pages": 1,
-          "has_more": false
-        }
+        "total": 250,
+        "has_more": true
       }
     },
     {

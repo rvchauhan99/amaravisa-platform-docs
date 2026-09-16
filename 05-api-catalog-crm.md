@@ -5,7 +5,7 @@ These endpoints power the **staff CRM**. All require a staff JWT (`Authorization
 Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`openapi/openapi.json`](openapi/openapi.json).
 
 
-**70 operations** in this catalog.
+**71 operations** in this catalog.
 
 ## crm_commercial
 
@@ -52,6 +52,7 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`open
 
 | Method | Path | Auth | Body | Query | Summary |
 |---|---|---|---|---|---|
+| GET | `/api/crm/case-groups/{group_id}` | staff JWT (+ menu where noted) |  |  | Get Case Group |
 | GET | `/api/crm/cases` | staff JWT (+ menu where noted) |  | stage, stage_group, country, consultant_id, sla, source, payment_status, on_hold, unassigned, decision, visa_type, case_type, q, from_date, to_date, closed_from, closed_to, page, limit, sort_by, sort_order, include_summary, include_docs | List Cases |
 | POST | `/api/crm/cases` | staff JWT (+ menu where noted) | OfflineCaseIn |  | Create Offline Case |
 | POST | `/api/crm/cases/bulk` | staff JWT (+ menu where noted) | BulkCasesIn |  | Bulk Cases |

@@ -429,6 +429,15 @@ RESPONSE_OVERRIDES = {
     ("post", "/api/media/product-banner"): {
         "url": "https://cdn.example.com/banners/usa.webp"
     },
+    ("get", "/api/visa-products/countries"): {
+        "items": [
+            {"code": "USA", "name": "United States", "flag": "🇺🇸"},
+            {"code": "IND", "name": "India", "flag": "🇮🇳"},
+            {"code": "SCH", "name": "Schengen (Europe)", "flag": "🇪🇺"},
+        ],
+        "total": 250,
+        "has_more": True,
+    },
     ("post", "/api/cases/webhooks/razorpay"): {"ok": True},
     ("get", "/api/crm/cases"): paged([CASE_ITEM]),
     ("get", "/api/crm/cases/{case_id}"): {
@@ -642,6 +651,8 @@ def build() -> dict:
             q = query_example(op)
             if path == "/api/documents/download":
                 q = {"token": DUMMY_JWT}
+            if path == "/api/visa-products/countries":
+                q = {"q": "ind", "limit": 10, "offset": 0, "id": "USA"}
             entry = {
                 "id": f"{method.upper()} {path}",
                 "surface": tag,

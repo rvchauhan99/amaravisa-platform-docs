@@ -116,6 +116,11 @@ Passport numbers are encrypted at rest and masked on list.
 ### VisaProductIn
 `country_code`, `country_name`, `visa_type` (`tourist` | `business` | `transit` | `other_general`), `visa_format?` (`visa_free` | `visa_on_arrival` | `e_visa` | `sticker_visa`), `title`, `banner_image_url?`, `validity_days`, `processing_time_days`, `passport_min_validity_months?` (default 6), `display_order?`
 
+`country_code` must be an ISO 3166-1 alpha-3 code from `GET /api/visa-products/countries`, or the custom code `SCH` (Schengen Europe). Staff `country_codes[]` use the same vocabulary.
+
+### Country option (`GET /api/visa-products/countries`)
+`code` (ISO-3 or `SCH`), `name`, `flag` (emoji). Full world list (~250); priority destinations sort first. With `limit`, response is paged `{ items, total, has_more }`; without `limit`, a flat array. Query `id` hydrates by country code (not UUID).
+
 ### VisaProductDocumentIn / PassportProductDocumentIn
 `doc_key`, `doc_name?`, `description?`, `required?`, `formats_allowed?` (`pdf` | `jpg` | `png`), `max_file_size_mb?`, `sample_file_url?`, `display_order` (default 0)
 
@@ -142,10 +147,10 @@ Passport numbers are encrypted at rest and masked on list.
 ## Cases
 
 ### CaseDraftIn
-`visa_product_id`, `traveler` (object), `field_values` (object), `document_uploads[]` (`doc_key`, `file_url`, `filename`)
+`visa_product_id`, `traveler` (object — primary / legacy), `travelers?` (array of party members, 1–6; each may include traveler fields plus `id?`, `field_values?`, `document_uploads?`), `field_values` (object — primary), `document_uploads[]` (`doc_key`, `file_url`, `filename`). When `travelers` is omitted, singular `traveler` creates a one-member party.
 
 ### CaseDraftPatchIn
-same optional fields plus `step?`
+same optional fields plus `step?`, `active_traveler_id?`, `travelers?`
 
 ### MockCheckoutIn
 `draft_id`, `outcome`: `success` | `failure`
@@ -153,8 +158,19 @@ same optional fields plus `step?`
 ### PaymentConfirmIn
 `draft_id`, `order_id?`, `payment_id?`, `signature?`, `outcome`: `success` | `failure`
 
+Checkout success returns `case_id` (primary), `case_ids[]`, `case_group_id?`, `primary_case_id`, `traveler_count`. Order amount = unit product fee × N.
+
 ### OfflineCaseIn
-`visa_product_id`, `customer_email`, `customer_full_name`, `customer_phone?`, `traveler`, `field_values`, `document_uploads[]`, `payment_status` (`pending` | `paid`), `payment_method?`, `payment_reference?`
+`visa_product_id`, `customer_email`, `customer_full_name`, `customer_phone?`, `traveler`, `travelers?` (1–6), `field_values`, `document_uploads[]`, `payment_status` (`pending` | `paid`), `payment_method?`, `payment_reference?`
+
+Response: `case_id` (primary), `case_ids[]`, `case_group_id?`, `traveler_count`.
+
+### Case groups (linked multi-traveler bookings)
+Collection `case_groups`: `id`, `tenant_id`, `customer_id`, `visa_product_id`, `traveler_count`, `unit_fees_snapshot`, `total_fees`, `payment_status`, `order_id?`, `status` (`draft` | `paid` | `cancelled`), `created_at`.
+
+Cases linked via `case_group_id?`, `traveler_index` (0-based), `is_primary`. Cap: `APPLY_MAX_TRAVELERS` (default 6). Existing singleton cases keep `case_group_id = null`.
+
+CRM case list enrichment adds `traveler_count`, `group_has_lagging_sibling`, `group_members[]` (`id`, `case_number`, `stage`, `stage_label`, `traveler_index`, `is_primary`, `traveler_name`). Case detail returns `case_group` + `sibling_cases`. Client recent work / history items include `case_group_id` when set.
 
 ### StageChangeIn
 `target_stage` (`new` | `docs_pending` | `ready_to_submit` | `submitted` | `decision` | `closed`), `note?`
@@ -248,7 +264,10 @@ Shared contact fields plus `services[]` (`service_type` + `service_details`), mi
 `multipart/form-data` field `file`. Optional query `doc_key`. Returns a signed `file_url`.
 
 ### `POST /api/documents/scan-passport`
-`multipart/form-data` field `file` (JPG/PNG/WebP/PDF). Customer JWT. Response includes `full_name`, `passport_number`, dates, `gender`, `nationality`, `ocr_confidence`, `request_id`, `warnings`.
+`multipart/form-data` field `file` (JPG/PNG/WebP/PDF). Customer JWT. In-process MRZScanner + TD3.
+Response includes `full_name`, `passport_number`, dates, `gender`, `nationality`, `ocr_confidence`,
+`request_id`, `warnings`, optional `fields` / `quality`, and `document.pageIndex` (0-based PDF page
+where a valid MRZ was found). Timeout default 45s.
 
 ### `POST /api/media/product-banner`
 Staff JWT. Multipart image. Requires public R2 bucket config. Returns a public WebP URL.
