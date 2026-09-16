@@ -33,7 +33,7 @@ Both axios clients send `Authorization: Bearer <token>` when a session exists. A
 
 | Page | Typical APIs |
 |------|----------------|
-| `/` home catalog | `GET /api/visa-products`, `GET /api/visa-products/countries` (SSR/ISR + client) |
+| `/` home catalog | `GET /api/visa-products`, `GET /api/visa-products/countries` (SSR/ISR + client). **Guaranteed Visa On** = calendar `today + processing_time_days` (no weekend/holiday skip; same formula as new-case SLA due date). |
 | `/visa/[productId]` | `GET /api/visa-products/{product_id}` |
 | `/auth` | `POST /api/auth/customer/register`, `verify-otp`, `resend-otp`, `login`, `google`, `forgot-password` |
 | `/apply/[productId]` | Dynamic steps: Party (1–6 travelers) → Details (if fields, per traveler) → Documents (if product docs, per traveler) → Review → Payment (fees × N). Passport scan + passport fields only when `passport_scan` is on the product. APIs: `POST /api/cases` (`travelers[]`), `PATCH /api/cases/drafts/{id}`, traveler add/remove, `POST /api/documents/upload`, `POST /api/documents/scan-passport`, checkout → N linked cases + `case_group_id` |
