@@ -141,8 +141,14 @@ Passport numbers are encrypted at rest and masked on list.
 
 `doc_key` is generated server-side.
 
+`GET /api/admin/document-master?q=` searches `doc_key`, `default_name`, `default_description`, and `category`. Omit `limit` for the full list (CRM master select does this); with `limit`, response is `{ items, total, has_more }`.
+
 ### FieldMasterIn
 `default_label`, `default_field_type` (default `text`), `default_options?`, `default_required`, `validation_regex?`, `is_basic`, `active`
+
+`field_key` is generated server-side.
+
+`GET /api/admin/field-master?q=` searches `field_key`, `default_label`, `default_field_type`, options text, and `validation_regex`. Omit `limit` for the full list (CRM master select does this); with `limit`, response is `{ items, total, has_more }`.
 
 ## Cases
 

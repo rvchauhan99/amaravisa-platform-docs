@@ -31,10 +31,10 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`open
 
 | Method | Path | Auth | Body | Query | Summary |
 |---|---|---|---|---|---|
-| GET | `/api/admin/document-master` | staff JWT + menu |  | active, q, limit, offset, id | List Document Master |
+| GET | `/api/admin/document-master` | staff JWT + menu |  | active, q, limit, offset, id | List Document Master (`q` matches `doc_key`, `default_name`, `default_description`, `category`; omit `limit` for full list) |
 | POST | `/api/admin/document-master` | staff JWT + menu | DocumentMasterIn |  | Create Document Master |
 | PATCH | `/api/admin/document-master/{master_id}` | staff JWT + menu | DocumentMasterPatch |  | Patch Document Master |
-| GET | `/api/admin/field-master` | staff JWT + menu |  | active, q, limit, offset, id | List Field Master |
+| GET | `/api/admin/field-master` | staff JWT + menu |  | active, q, limit, offset, id | List Field Master (`q` matches `field_key`, `default_label`, `default_field_type`, options text, `validation_regex`; omit `limit` for full list) |
 | POST | `/api/admin/field-master` | staff JWT + menu | FieldMasterIn |  | Create Field Master |
 | PATCH | `/api/admin/field-master/{master_id}` | staff JWT + menu | FieldMasterPatch |  | Patch Field Master |
 
