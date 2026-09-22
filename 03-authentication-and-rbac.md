@@ -47,6 +47,18 @@ Temp token purpose: `staff_2fa_pending` (5 minutes). Inactive staff cannot authe
 | Unrestricted | System Admin role (`unrestricted_scope: true`) — all countries / all staff |
 | Webhook | `X-Razorpay-Signature` |
 | Download | Short-lived signed `token` query on `GET /api/documents/download` |
+| Upload session (`session_id`) | Opaque client string on `POST /documents/upload`, draft GET/PATCH, notify/session/WS. Unauthenticated phone QR flow. **Not** bound to draft ownership — treat as known risk until short-lived bound tokens land. |
+
+## Mobile upload session auth
+
+| Surface | Rule |
+|---------|------|
+| Apply UI | `?mobile_connect=1` bypasses customer login gate |
+| Upload | Customer JWT **or** `session_id` query |
+| Draft GET/PATCH | Customer JWT **or** any `session_id` query (draft looked up by id only when no JWT) |
+| notify / session GET/sync / WS | Public (anyone with `session_id`) |
+
+Ops: keep API at **one** worker for in-memory live sync.
 
 ## Role Master
 

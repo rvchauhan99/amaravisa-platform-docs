@@ -40,7 +40,8 @@ Production interactive docs: `https://<passage-api-host>/docs` (same FastAPI app
 |----------|---------|
 | `NEXT_PUBLIC_BACKEND_URL` | API origin without `/api` |
 | `NEXT_PUBLIC_CRM_URL` | Link to staff login (default `http://localhost:3001/login`) |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin for SEO |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for SEO **and** Upload-from-Mobile QR base (must be phone-reachable; set LAN IP for local dual-device QA) |
+| `NEXT_PUBLIC_APP_URL` | Optional QR alias; `SITE_URL` wins if both set |
 | `NEXT_PUBLIC_FIREBASE_API_KEY` | Google sign-in |
 | `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | |
 | `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | |

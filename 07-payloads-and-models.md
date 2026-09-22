@@ -267,7 +267,21 @@ Shared contact fields plus `services[]` (`service_type` + `service_details`), mi
 ## Uploads
 
 ### `POST /api/documents/upload` and `/staff-upload`
-`multipart/form-data` field `file`. Optional query `doc_key`. Returns a signed `file_url`.
+`multipart/form-data` field `file`. Optional query `doc_key`. Customer upload also accepts optional query `session_id` (JWT **or** `session_id` required). Returns a signed `file_url` (+ `storage_key` / `key`). When `session_id` is set, broadcasts `document_uploaded` on the session WebSocket.
+
+### Mobile upload session (QR phone ↔ laptop)
+
+#### `POST /api/documents/notify-upload` — `UploadNotificationIn`
+`session_id`, `doc_key`, `document_type?`, `name?`, `status?`, `file_url?`, `filename?`, `storage_key?`, `progress?`, `details?`
+
+#### `GET /api/documents/session/{session_id}`
+Optional query `draft_id`. Returns `{ session_id, documents: { [doc_key]: event } }`.
+
+#### `POST /api/documents/session/{session_id}/sync` — `SessionSyncIn`
+`documents[]` with `doc_key`, `file_url?`, `filename?`, `storage_key?`, `name?`. Primes in-memory session cache (no broadcast).
+
+#### `WS /api/documents/ws/{session_id}`
+Events: `document_uploaded`, `session_sync`. Client may send text `ping` → `pong`.
 
 ### `POST /api/documents/scan-passport`
 `multipart/form-data` field `file` (JPG/PNG/WebP/PDF). Customer JWT. In-process MRZScanner + TD3.
