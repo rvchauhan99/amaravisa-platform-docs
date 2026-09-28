@@ -162,9 +162,25 @@ same optional fields plus `step?`, `active_traveler_id?`, `travelers?`
 `draft_id`, `outcome`: `success` | `failure`
 
 ### PaymentConfirmIn
-`draft_id`, `order_id?`, `payment_id?`, `signature?`, `outcome`: `success` | `failure`
+`draft_id`, `order_id?`, `payment_id?`, `signature?`, `outcome`: `success` | `failure`, `payment_method?`: `neft` | `upi` | `imps` (default `neft`), `payment_proof?` (`file_url`, `filename`, `storage_key?`)
 
-Checkout success returns `case_id` (primary), `case_ids[]`, `case_group_id?`, `primary_case_id`, `traveler_count`. Order amount = unit product fee × N.
+While `GATEWAY_ENABLED` is False, checkout is `bank_transfer`: `payment_proof` is required, cases are created `payment_status=pending`, no ledger / `payment_confirmed` yet. Success returns `case_id` (primary), `case_ids[]`, `case_group_id?`, `primary_case_id`, `traveler_count`, `payment_mode`, `payment_status`. Idempotent on `source_draft_id`.
+
+Customer re-upload: `POST /api/cases/{case_id}/payment-proof` body `PaymentProofIn`.
+
+### CrmPaymentConfirmIn
+`reference` (UTR, required), `method`: `neft` | `upi` | `imps` (default `neft`), `note?`
+
+`POST /api/crm/cases/{case_id}/payment/confirm` (`pipeline`). Marks the case and group siblings paid, writes one ledger row (`notes=bank_transfer_confirm`), fires `payment_confirmed`. 400 if already paid.
+
+### CrmPaymentRejectProofIn
+`reason`
+
+`POST /api/crm/cases/{case_id}/payment/reject-proof` (`pipeline`). Keeps `pending`, stores `payment_proof_rejection`. Customer re-uploads from status.
+
+### PaymentBankDetails (GET `/api/payment/bank-details`)
+
+Customer JWT. Fields from env (unset or blank → `null`): `bank_name`, `account_name`, `account_number`, `ifsc`, `branch_name`, `upi_id`. `PAYMENT_CUST_ID` is staff-only and is **not** returned here. Empty `upi_id` hides the QR on `/apply`.
 
 ### OfflineCaseIn
 `visa_product_id`, `customer_email`, `customer_full_name`, `customer_phone?`, `traveler`, `travelers?` (1–6), `field_values`, `document_uploads[]`, `payment_status` (`pending` | `paid`), `payment_method?`, `payment_reference?`

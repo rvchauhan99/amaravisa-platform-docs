@@ -7,7 +7,7 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · [ReDoc](http://127
 Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md).
 
 
-**45 operations** in this catalog.
+**47 operations** in this catalog.
 
 ## other
 
@@ -15,6 +15,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 |---|---|---|---|---|---|
 | GET | `/api/` | public |  |  | Root |
 | GET | `/api/health` | public |  |  | Health |
+| GET | `/api/payment/bank-details` | customer JWT |  |  | Get Payment Bank Details |
 
 ## auth
 
@@ -45,6 +46,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | GET | `/api/cases/notifications/portal` | customer JWT |  |  | Portal Notifications |
 | POST | `/api/cases/webhooks/razorpay` | webhook HMAC |  |  | Razorpay Webhook |
 | POST | `/api/cases/{case_id}/documents/{doc_id}/resubmit` | customer JWT | DocumentResubmitIn |  | Resubmit Document |
+| POST | `/api/cases/{case_id}/payment-proof` | customer JWT | PaymentProofIn |  | Replace Payment Proof |
 | GET | `/api/cases/{case_id}/receipt` | customer JWT |  |  | Case Receipt |
 | GET | `/api/cases/{case_id}/status` | customer JWT |  |  | Case Status |
 
@@ -80,14 +82,11 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | Method | Path | Auth | Body | Query | Summary |
 |---|---|---|---|---|---|
 | GET | `/api/documents/download` | signed `token` query |  | token | Download |
-| POST | `/api/documents/notify-upload` | public (`session_id` in body) | UploadNotificationIn |  | Notify Upload |
+| POST | `/api/documents/notify-upload` | customer JWT **or** `session_id` | UploadNotificationIn |  | Notify Upload |
 | POST | `/api/documents/scan-passport` | customer JWT | multipart/form-data (`file`) |  | Scan Passport |
-| GET | `/api/documents/session/{session_id}` | public |  | draft_id | Get Session Status |
-| POST | `/api/documents/session/{session_id}/sync` | public | SessionSyncIn |  | Sync Session Documents |
-| WS | `/api/documents/ws/{session_id}` | public |  |  | Live upload events (`document_uploaded`, `session_sync`) |
-| POST | `/api/documents/upload` | customer JWT **or** `session_id` query | multipart/form-data (`file`) | doc_key, session_id | Upload Document |
-
-> **Ops:** upload-session state is in-memory per process. Run a single API instance/worker for reliable live sync. Cloud Run images must install `uvicorn[standard]` + `websockets` (see `requirements.cloudrun.txt`).
+| GET | `/api/documents/session/{session_id}` | customer JWT **or** `session_id` |  | draft_id | Get Session Status |
+| POST | `/api/documents/session/{session_id}/sync` | customer JWT **or** `session_id` | SessionSyncIn |  | Sync Session Documents |
+| POST | `/api/documents/upload` | customer JWT | multipart/form-data (`file`) | doc_key, session_id | Upload Document |
 
 ## visa_products
 

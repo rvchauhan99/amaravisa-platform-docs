@@ -5,7 +5,7 @@ These endpoints power the **staff CRM**. All require a staff JWT (`Authorization
 Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`openapi/openapi.json`](openapi/openapi.json).
 
 
-**71 operations** in this catalog.
+**73 operations** in this catalog.
 
 ## crm_commercial
 
@@ -62,6 +62,8 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`open
 | POST | `/api/crm/cases/{case_id}/documents/{doc_id}/verify` | staff JWT (+ menu where noted) | DocumentVerifyIn |  | Verify Doc |
 | PATCH | `/api/crm/cases/{case_id}/fields` | staff JWT (+ menu where noted) | CaseFieldEditIn |  | Edit Field Value |
 | POST | `/api/crm/cases/{case_id}/notes` | staff JWT (+ menu where noted) | CaseNoteIn |  | Add Note |
+| POST | `/api/crm/cases/{case_id}/payment/confirm` | staff JWT (+ menu where noted) | CrmPaymentConfirmIn |  | Confirm Bank Payment |
+| POST | `/api/crm/cases/{case_id}/payment/reject-proof` | staff JWT (+ menu where noted) | CrmPaymentRejectProofIn |  | Reject Payment Proof |
 | PATCH | `/api/crm/cases/{case_id}/reassign` | staff JWT (+ menu where noted) | ReassignIn |  | Reassign Case |
 | PATCH | `/api/crm/cases/{case_id}/stage` | staff JWT (+ menu where noted) | StageChangeIn |  | Change Stage |
 | GET | `/api/crm/consultants` | staff JWT (+ menu where noted) |  | country, q, limit, offset, id | List Consultants |

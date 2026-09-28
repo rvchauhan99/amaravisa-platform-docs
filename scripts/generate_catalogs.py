@@ -64,6 +64,10 @@ def auth_note(path: str, tag: str) -> str:
         return "webhook HMAC"
     if path == "/api/documents/download":
         return "signed `token` query"
+    if path == "/api/cases/drafts/{draft_id}":
+        return "customer JWT **or** `session_id` query"
+    if path.startswith("/api/documents/session/") or path == "/api/documents/notify-upload":
+        return "customer JWT **or** `session_id`"
     if path.startswith("/api/auth/customer") or path.startswith("/api/auth/staff/login") or path.startswith("/api/auth/staff/verify-2fa"):
         return "public"
     if tag == "crm":

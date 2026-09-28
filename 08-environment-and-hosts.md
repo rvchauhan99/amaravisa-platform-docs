@@ -46,7 +46,7 @@ Production interactive docs: `https://<passage-api-host>/docs` (same FastAPI app
 | `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | |
 | `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | |
 | `NEXT_PUBLIC_FIREBASE_APP_ID` | |
-| `NEXT_PUBLIC_ALLOW_MOCK_PAYMENT` | Show mock checkout when API `PAYMENT_MODE=mock` |
+| `NEXT_PUBLIC_ALLOW_MOCK_PAYMENT` | Unused while bank-transfer checkout is on (gateway hardcoded off). |
 | `NEXT_PUBLIC_SUPPORT_EMAIL` / `PHONE` / `WHATSAPP` | Contact |
 | `NEXT_PUBLIC_OFFICE_MAPS_URL` | Maps link |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 |
@@ -56,7 +56,9 @@ Production interactive docs: `https://<passage-api-host>/docs` (same FastAPI app
 | Variable | Consumer impact |
 |----------|-----------------|
 | `CORS_ORIGINS` | Browser origin must be listed (local 3000+3001; prod Vercel + amaravisa hosts) |
-| `PAYMENT_MODE` / `RAZORPAY_KEY_ID` | Checkout returns `mock` vs Razorpay.js `key_id` |
+| `PAYMENT_MODE` / `RAZORPAY_KEY_ID` | Ignored while `GATEWAY_ENABLED` is False in `services/payments.py`. Checkout is `bank_transfer` until the card gateway ships. |
+| `PAYMENT_BANK_NAME` / `PAYMENT_ACCOUNT_NAME` / `PAYMENT_ACCOUNT_NUMBER` / `PAYMENT_IFSC` / `PAYMENT_BRANCH_NAME` / `PAYMENT_UPI_ID` | Customer `/apply` Payment (`GET /api/payment/bank-details`). Empty values omit that row; empty UPI hides QR. |
+| `PAYMENT_CUST_ID` | HDFC customer id — staff/ops only; never on the customer bank-details payload. |
 | `FIREBASE_PROJECT_ID` | Google login fails with 503 if unset |
 | `RESEND_API_KEY` | OTP / reset emails |
 | `BUCKET_PUBLIC_URL` | Product banner URLs |

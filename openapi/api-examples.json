@@ -7,7 +7,7 @@
     "customer": "Authorization: Bearer <customer_jwt>",
     "staff": "Authorization: Bearer <staff_jwt>"
   },
-  "count": 184,
+  "count": 188,
   "apis": [
     {
       "id": "GET /api/",
@@ -1938,15 +1938,29 @@
       "query": {},
       "request_body": {
         "draft_id": "11111111-1111-4111-8111-111111111111",
-        "order_id": "order_demo_1",
-        "payment_id": "pay_demo_1",
-        "signature": "dummy_signature",
-        "outcome": "success"
+        "order_id": null,
+        "payment_id": null,
+        "signature": null,
+        "outcome": "success",
+        "payment_method": "neft",
+        "payment_proof": {
+          "file_url": "https://example.com/neft-slip.png",
+          "filename": "neft-slip.png",
+          "storage_key": "qa/neft-slip.png"
+        }
       },
       "response_status": 200,
       "response_body": {
+        "status": "success",
         "case_id": "11111111-1111-4111-8111-111111111111",
-        "case_number": "AV-2026-0001"
+        "case_ids": [
+          "11111111-1111-4111-8111-111111111111"
+        ],
+        "case_group_id": null,
+        "primary_case_id": "11111111-1111-4111-8111-111111111111",
+        "traveler_count": 1,
+        "payment_mode": "bank_transfer",
+        "payment_status": "pending"
       }
     },
     {
@@ -1967,11 +1981,14 @@
       },
       "response_status": 200,
       "response_body": {
-        "mode": "mock",
-        "order_id": "order_demo_1",
+        "mode": "bank_transfer",
+        "order_id": null,
         "key_id": null,
         "amount": 1850000,
-        "currency": "INR"
+        "currency": "INR",
+        "traveler_count": 1,
+        "unit_amount": 18500.0,
+        "total_amount": 18500.0
       }
     },
     {
@@ -2221,6 +2238,30 @@
         "ok": true,
         "id": "11111111-1111-4111-8111-111111111111",
         "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/cases/{case_id}/payment-proof",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/{case_id}/payment-proof",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "file_url": "https://example.com/neft-slip.png",
+        "filename": "neft-slip.png",
+        "storage_key": "qa/neft-slip.png"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true
       }
     },
     {
@@ -2674,6 +2715,55 @@
         "ok": true,
         "id": "11111111-1111-4111-8111-111111111111",
         "updated_at": "2026-09-08T10:00:00+00:00"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/payment/confirm",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/payment/confirm",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "reference": "HDFC123456789",
+        "method": "neft",
+        "note": "UTR matched"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "payment_status": "paid",
+        "payment_reference": "HDFC123456789"
+      }
+    },
+    {
+      "id": "POST /api/crm/cases/{case_id}/payment/reject-proof",
+      "surface": "crm",
+      "method": "POST",
+      "path": "/api/crm/cases/{case_id}/payment/reject-proof",
+      "auth": "staff JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      },
+      "query": {},
+      "request_body": {
+        "reason": "UTR not visible on the screenshot"
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true,
+        "payment_status": "pending"
       }
     },
     {
@@ -4907,6 +4997,28 @@
           "pages": 1,
           "has_more": false
         }
+      }
+    },
+    {
+      "id": "GET /api/payment/bank-details",
+      "surface": "customer",
+      "method": "GET",
+      "path": "/api/payment/bank-details",
+      "auth": "customer JWT",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": null,
+      "response_status": 200,
+      "response_body": {
+        "bank_name": "HDFC Bank",
+        "account_name": "AMARAVISA INDIA PRIVATE LIMITED",
+        "account_number": "99948155035437",
+        "ifsc": "HDFC0007656",
+        "branch_name": "KUDASAN 2 BRANCH",
+        "upi_id": null
       }
     },
     {
