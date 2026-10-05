@@ -7,7 +7,7 @@
     "customer": "Authorization: Bearer <customer_jwt>",
     "staff": "Authorization: Bearer <staff_jwt>"
   },
-  "count": 188,
+  "count": 191,
   "apis": [
     {
       "id": "GET /api/",
@@ -1964,6 +1964,54 @@
       }
     },
     {
+      "id": "POST /api/cases/checkout/cashfree/create-order",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/checkout/cashfree/create-order",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "draft_id": "11111111-1111-4111-8111-111111111111",
+        "return_url": "https://www.amaravisa.com/apply/demo?cashfree_order_id={order_id}&draft_id=11111111-1111-4111-8111-111111111111"
+      },
+      "response_status": 200,
+      "response_body": {
+        "order_id": "cf_order_demo",
+        "payment_session_id": "session_demo",
+        "environment": "sandbox",
+        "total_amount": 1500.0
+      }
+    },
+    {
+      "id": "POST /api/cases/checkout/cashfree/verify",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/checkout/cashfree/verify",
+      "auth": "customer JWT",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "draft_id": "11111111-1111-4111-8111-111111111111",
+        "order_id": "cf_order_demo"
+      },
+      "response_status": 200,
+      "response_body": {
+        "status": "success",
+        "payment_mode": "cashfree",
+        "payment_status": "paid",
+        "case_id": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
       "id": "POST /api/cases/checkout/create-order",
       "surface": "customer",
       "method": "POST",
@@ -2184,6 +2232,38 @@
       "response_body": {
         "id": "11111111-1111-4111-8111-111111111111",
         "status": "ok"
+      }
+    },
+    {
+      "id": "POST /api/cases/webhooks/cashfree",
+      "surface": "customer",
+      "method": "POST",
+      "path": "/api/cases/webhooks/cashfree",
+      "auth": "webhook HMAC",
+      "headers": {
+        "Content-Type": "application/json",
+        "x-webhook-signature": "dummy_hmac_signature",
+        "x-webhook-timestamp": "1700000000"
+      },
+      "path_params": {},
+      "query": {},
+      "request_body": {
+        "type": "PAYMENT_SUCCESS_WEBHOOK",
+        "data": {
+          "order": {
+            "order_id": "cf_order_demo",
+            "order_amount": 1500.0,
+            "order_currency": "INR"
+          },
+          "payment": {
+            "cf_payment_id": "991",
+            "payment_status": "SUCCESS"
+          }
+        }
+      },
+      "response_status": 200,
+      "response_body": {
+        "ok": true
       }
     },
     {

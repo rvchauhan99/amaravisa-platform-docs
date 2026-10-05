@@ -7,7 +7,7 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · [ReDoc](http://127
 Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md).
 
 
-**47 operations** in this catalog.
+**50 operations** in this catalog.
 
 ## other
 
@@ -35,6 +35,8 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 |---|---|---|---|---|---|
 | POST | `/api/cases` | customer JWT | CaseDraftIn |  | Save Draft |
 | POST | `/api/cases/checkout` | customer JWT | PaymentConfirmIn |  | Checkout Confirm |
+| POST | `/api/cases/checkout/cashfree/create-order` | customer JWT | CashfreeCreateOrderIn |  | Create Cashfree Order |
+| POST | `/api/cases/checkout/cashfree/verify` | customer JWT | CashfreeVerifyIn |  | Verify Cashfree Payment |
 | POST | `/api/cases/checkout/create-order` | customer JWT | MockCheckoutIn |  | Create Payment Order |
 | GET | `/api/cases/drafts` | customer JWT |  |  | List Drafts |
 | GET | `/api/cases/drafts/{draft_id}` | customer JWT **or** `session_id` query |  | session_id | Get Draft |
@@ -44,6 +46,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | GET | `/api/cases/groups/{group_id}` | customer JWT |  |  | Get My Case Group |
 | GET | `/api/cases/my` | customer JWT |  |  | My Cases |
 | GET | `/api/cases/notifications/portal` | customer JWT |  |  | Portal Notifications |
+| POST | `/api/cases/webhooks/cashfree` | webhook HMAC |  |  | Cashfree Webhook |
 | POST | `/api/cases/webhooks/razorpay` | webhook HMAC |  |  | Razorpay Webhook |
 | POST | `/api/cases/{case_id}/documents/{doc_id}/resubmit` | customer JWT | DocumentResubmitIn |  | Resubmit Document |
 | POST | `/api/cases/{case_id}/payment-proof` | customer JWT | PaymentProofIn |  | Replace Payment Proof |

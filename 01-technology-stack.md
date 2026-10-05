@@ -55,7 +55,7 @@ A legacy CRA customer app exists at `customer-cra/` for reference only. It is no
 | Auth | JWT HS256 (`python-jose` / PyJWT), bcrypt, TOTP (`pyotp`) |
 | Tenancy | `tenant_id` on JWT and documents (default `tenant_default`) |
 | File storage | Local disk or **S3-compatible** (Cloudflare R2) |
-| Payments | **Razorpay** or mock |
+| Payments | **Cashfree** when API keys are set; otherwise bank transfer. Razorpay remains behind `GATEWAY_ENABLED`. |
 | Email | **Resend** |
 | OCR | In-process **MRZScanner** (DocsaidLab) + ICAO TD3; **PaddleOCR** for VIZ issue date / MRZ fallback (not Paddle Billing, not cloud ID APIs) |
 | Hosting | **GCP Cloud Run** service `passage-api`, project `amaravisa-hub`, region `asia-south1` |

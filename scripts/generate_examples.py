@@ -84,7 +84,7 @@ def auth_note(path: str, tag: str) -> str:
         return "public"
     if path.startswith("/api/visa-products") and "/admin/" not in path:
         return "public"
-    if path == "/api/cases/webhooks/razorpay":
+    if path in {"/api/cases/webhooks/razorpay", "/api/cases/webhooks/cashfree"}:
         return "webhook HMAC"
     if path == "/api/documents/download":
         return "signed token query"
@@ -486,6 +486,19 @@ RESPONSE_OVERRIDES = {
         "has_more": True,
     },
     ("post", "/api/cases/webhooks/razorpay"): {"ok": True},
+    ("post", "/api/cases/webhooks/cashfree"): {"ok": True},
+    ("post", "/api/cases/checkout/cashfree/create-order"): {
+        "order_id": "cf_order_demo",
+        "payment_session_id": "session_demo",
+        "environment": "sandbox",
+        "total_amount": 1500.0,
+    },
+    ("post", "/api/cases/checkout/cashfree/verify"): {
+        "status": "success",
+        "payment_mode": "cashfree",
+        "payment_status": "paid",
+        "case_id": "11111111-1111-4111-8111-111111111111",
+    },
     ("get", "/api/crm/cases"): paged([CASE_ITEM]),
     ("get", "/api/crm/cases/{case_id}"): {
         **CASE_ITEM,
@@ -554,9 +567,28 @@ def request_example(op: dict, path: str) -> tuple[dict | None, str | None]:
             },
             "application/json",
         )
+    if path == "/api/cases/webhooks/cashfree":
+        return (
+            {
+                "type": "PAYMENT_SUCCESS_WEBHOOK",
+                "data": {
+                    "order": {"order_id": "cf_order_demo", "order_amount": 1500.0, "order_currency": "INR"},
+                    "payment": {"cf_payment_id": "991", "payment_status": "SUCCESS"},
+                },
+            },
+            "application/json",
+        )
     path_bodies = {
         "/api/auth/staff/login": {"email": "admin@visaconsult.demo", "password": "Admin@123"},
         "/api/auth/customer/login": {"email": "priya@example.com", "password": "Test@123"},
+        "/api/cases/checkout/cashfree/create-order": {
+            "draft_id": "11111111-1111-4111-8111-111111111111",
+            "return_url": "https://www.amaravisa.com/apply/demo?cashfree_order_id={order_id}&draft_id=11111111-1111-4111-8111-111111111111",
+        },
+        "/api/cases/checkout/cashfree/verify": {
+            "draft_id": "11111111-1111-4111-8111-111111111111",
+            "order_id": "cf_order_demo",
+        },
     }
     if path in path_bodies:
         return deepcopy(path_bodies[path]), "application/json"
@@ -615,6 +647,9 @@ def headers_for(path: str, tag: str, content_type: str | None) -> dict:
         headers["Authorization"] = f"Bearer {DUMMY_JWT}"
     elif auth == "customer JWT":
         headers["Authorization"] = f"Bearer {DUMMY_JWT}"
+    elif path == "/api/cases/webhooks/cashfree":
+        headers["x-webhook-signature"] = "dummy_hmac_signature"
+        headers["x-webhook-timestamp"] = "1700000000"
     elif auth == "webhook HMAC":
         headers["X-Razorpay-Signature"] = "dummy_hmac_signature"
     if path == "/api/documents/download":

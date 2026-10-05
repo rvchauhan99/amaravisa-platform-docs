@@ -164,7 +164,13 @@ same optional fields plus `step?`, `active_traveler_id?`, `travelers?`
 ### PaymentConfirmIn
 `draft_id`, `order_id?`, `payment_id?`, `signature?`, `outcome`: `success` | `failure`, `payment_method?`: `neft` | `upi` | `imps` (default `neft`), `payment_proof?` (`file_url`, `filename`, `storage_key?`)
 
-While `GATEWAY_ENABLED` is False, checkout is `bank_transfer`: `payment_proof` is required, cases are created `payment_status=pending`, no ledger / `payment_confirmed` yet. Success returns `case_id` (primary), `case_ids[]`, `case_group_id?`, `primary_case_id`, `traveler_count`, `payment_mode`, `payment_status`. Idempotent on `source_draft_id`.
+Checkout is `bank_transfer` until both `CASHFREE_CLIENT_ID` and `CASHFREE_CLIENT_SECRET` are set. Bank transfer requires `payment_proof`; cases are created `payment_status=pending`, with no ledger row yet. Cashfree checkout sends `order_id` after the hosted checkout; the API confirms the order is `PAID` with Cashfree, then creates cases `payment_status=paid`. Success returns `case_id` (primary), `case_ids[]`, `case_group_id?`, `primary_case_id`, `traveler_count`, `payment_mode`, `payment_status`. Idempotent on `source_draft_id`.
+
+`POST /api/cases/checkout/create-order` body `MockCheckoutIn`. When Cashfree is configured the response adds `payment_session_id` and `cashfree_env` (`sandbox` or `production`).
+
+`POST /api/cases/checkout/cashfree/create-order` body `draft_id`, `return_url?`. Same session payload. Customer phone is normalized; a missing phone is sent as a placeholder so Cashfree can still open. Orders use Cashfree API version `2025-01-01`. `CASHFREE_APP_ID` / `CASHFREE_SECRET_KEY` are aliases for the client id and secret.
+
+`POST /api/cases/checkout/cashfree/verify` body `draft_id`, `order_id`. Confirms the order is paid with Cashfree, then creates the paid cases. Safe to call again.
 
 Customer re-upload: `POST /api/cases/{case_id}/payment-proof` body `PaymentProofIn`.
 
@@ -310,3 +316,6 @@ Staff JWT. Multipart image. Requires public R2 bucket config. Returns a public W
 
 ### Razorpay webhook
 `POST /api/cases/webhooks/razorpay` — raw JSON, header `X-Razorpay-Signature`. No Bearer token.
+
+### Cashfree webhook
+`POST /api/cases/webhooks/cashfree` — raw JSON, headers `x-webhook-signature` and `x-webhook-timestamp`. No Bearer token. Signature is base64 HMAC-SHA256 of `timestamp + raw body` using `CASHFREE_CLIENT_SECRET`. `PAYMENT_SUCCESS_WEBHOOK` re-checks the order with Cashfree before marking the draft paid. Other event types are ignored.

@@ -24,7 +24,7 @@ This folder is a **standalone documentation repository**. It is not part of the 
 |---------|------------|------------|
 | **Customer platform** (public site) | Next.js app in `visaconsultantcrm-frontend/customer/` | Next.js 15 App Router, React 19, Tailwind CSS 4, Axios, Firebase (Google sign-in) |
 | **CRM / DASH** (staff ops) | CRA app in `visaconsultantcrm-frontend/crm/` | Create React App 5 + CRACO, React 19, React Router 7, Tailwind CSS 3, shadcn/Radix, Axios |
-| **API** | FastAPI service in `visaconsultantcrm-backend/` | Python 3.11, FastAPI 0.110, MongoDB (Motor), JWT, Razorpay, Resend, Cloudflare R2/S3 |
+| **API** | FastAPI service in `visaconsultantcrm-backend/` | Python 3.11, FastAPI 0.110, MongoDB (Motor), JWT, Cashfree or bank transfer, Resend, Cloudflare R2/S3 |
 
 Full library and hosting detail: [01-technology-stack.md](01-technology-stack.md).
 
@@ -54,7 +54,7 @@ See [02-architecture-and-integration.md](02-architecture-and-integration.md).
 | Auth, JWT, Role Master menus | [03-authentication-and-rbac.md](03-authentication-and-rbac.md) |
 | Hosts, CORS, env vars | [08-environment-and-hosts.md](08-environment-and-hosts.md) |
 | Passport OCR (existing) | summarised from backend `docs/passport-ocr/api.md` |
-| Releases | [2026-09-28 manual bank payment](releases/2026-09-28-manual-bank-payment.md) |
+| Releases | [2026-10-05 Cashfree checkout](releases/2026-10-05-cashfree-checkout.md), [2026-09-28 manual bank payment](releases/2026-09-28-manual-bank-payment.md) |
 
 Production Swagger is the same FastAPI app on Cloud Run: `https://<passage-api-host>/docs`.
 
@@ -66,7 +66,7 @@ Production Swagger is the same FastAPI app on Cloud Run: `https://<passage-api-h
 2. Use [02-architecture-and-integration.md](02-architecture-and-integration.md) for screen-to-API mapping.
 3. Use catalogs 04–06 for method, path, auth, body, and query parameters.
 4. Use [07-payloads-and-models.md](07-payloads-and-models.md) for field-level payloads.
-5. Copy dummy request/response bodies from [openapi/api-examples.json](openapi/api-examples.json) (177 operations).
+5. Copy dummy request/response bodies from [openapi/api-examples.json](openapi/api-examples.json) (191 operations).
 6. Import [openapi/openapi.json](openapi/openapi.json) into Postman / Insomnia if you need a machine-readable spec.
 
 Base URL for all HTTP paths in the catalogs is:

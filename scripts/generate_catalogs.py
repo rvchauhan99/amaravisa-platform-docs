@@ -60,7 +60,7 @@ def auth_note(path: str, tag: str) -> str:
         return "public"
     if path.startswith("/api/visa-products") and "/admin/" not in path:
         return "public"
-    if path == "/api/cases/webhooks/razorpay":
+    if path in {"/api/cases/webhooks/razorpay", "/api/cases/webhooks/cashfree"}:
         return "webhook HMAC"
     if path == "/api/documents/download":
         return "signed `token` query"
