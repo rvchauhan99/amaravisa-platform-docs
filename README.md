@@ -54,9 +54,9 @@ See [02-architecture-and-integration.md](02-architecture-and-integration.md).
 | Auth, JWT, Role Master menus | [03-authentication-and-rbac.md](03-authentication-and-rbac.md) |
 | Hosts, CORS, env vars | [08-environment-and-hosts.md](08-environment-and-hosts.md) |
 | Passport OCR (existing) | summarised from backend `docs/passport-ocr/api.md` |
-| Releases | [2026-10-05 apply continue hooks fix](releases/2026-10-05-apply-continue-hooks-fix.md), [2026-10-05 Cashfree checkout](releases/2026-10-05-cashfree-checkout.md), [2026-09-28 manual bank payment](releases/2026-09-28-manual-bank-payment.md) |
+| Releases | [2026-10-05 VPS CI deploy](releases/2026-10-05-vps-ci-deploy.md), [2026-10-05 apply continue hooks fix](releases/2026-10-05-apply-continue-hooks-fix.md), [2026-10-05 Cashfree checkout](releases/2026-10-05-cashfree-checkout.md), [2026-09-28 manual bank payment](releases/2026-09-28-manual-bank-payment.md) |
 
-Production Swagger is the same FastAPI app on Cloud Run: `https://<passage-api-host>/docs`.
+Production Swagger: `https://api.amaravisa.com/docs`.
 
 ---
 

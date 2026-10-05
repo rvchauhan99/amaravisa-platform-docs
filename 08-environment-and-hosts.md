@@ -25,6 +25,7 @@
 | Extra customer origin | `https://dash.amaravisa.com` |
 | Frontends | Two Vercel projects from `visaconsultantcrm-frontend` |
 | Cloud Run (rollback, not deleted yet) | `https://passage-api-kl2h4tfmqa-el.a.run.app` |
+| CI deploy | GitHub Actions `Deploy VPS` (`.github/workflows/deploy-vps.yml` in backend). Secrets: `VPS_HOST`, `VPS_PORT`, `VPS_USER`, `VPS_SSH_PRIVATE_KEY`. Env file on VPS: `/root/amaravisa/api.env`. |
 
 Vercel env (no `/api` suffix):
 

@@ -58,7 +58,7 @@ A legacy CRA customer app exists at `customer-cra/` for reference only. It is no
 | Payments | **Cashfree** when API keys are set; otherwise bank transfer. Razorpay remains behind `GATEWAY_ENABLED`. |
 | Email | **Resend** |
 | OCR | In-process **MRZScanner** (DocsaidLab) + ICAO TD3; **PaddleOCR** for VIZ issue date / MRZ fallback (not Paddle Billing, not cloud ID APIs) |
-| Hosting | **GCP Cloud Run** service `passage-api`, project `amaravisa-hub`, region `asia-south1` |
+| Hosting | **VPS** Docker + Caddy at `https://api.amaravisa.com` (legacy Cloud Run `passage-api` kept as rollback only) |
 | Local URL | http://localhost:8000 |
 | Health | `GET /api/health` |
 
