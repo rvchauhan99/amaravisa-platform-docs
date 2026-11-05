@@ -1,5 +1,5 @@
 {
-  "title": "AmaraVisa API examples",
+  "title": "amaravisa API examples",
   "base_url": "http://127.0.0.1:8000",
   "generated_from": "openapi/openapi.json + route/model review",
   "note": "Illustrative success payloads for integration. Not a production HAR. Errors typically return {\"detail\": \"...\"}.",
@@ -1807,12 +1807,12 @@
       "path_params": {},
       "query": {},
       "request_body": {
-        "issuer": "AmaraVisa CRM"
+        "issuer": "amaravisa CRM"
       },
       "response_status": 200,
       "response_body": {
         "secret": "JBSWY3DPEHPK3PXP",
-        "otpauth_uri": "otpauth://totp/AmaraVisa:staff@example.com?secret=JBSWY3DPEHPK3PXP",
+        "otpauth_uri": "otpauth://totp/amaravisa:staff@example.com?secret=JBSWY3DPEHPK3PXP",
         "qr_data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
       }
     },

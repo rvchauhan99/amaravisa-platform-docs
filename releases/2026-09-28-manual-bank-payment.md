@@ -1,11 +1,11 @@
 # Release note — Manual bank payment and CRM confirmation
 
 **Date:** 28 September 2026  
-**Audience:** AmaraVisa operations and leadership
+**Audience:** amaravisa operations and leadership
 
 ## What changed
 
-Online checkout no longer treats the fee as paid the moment the applicant clicks through. Applicants transfer to AmaraVisa’s HDFC account, upload a receipt, and submit the application. Staff confirm the UTR on the case Payment tab before the case is treated as paid.
+Online checkout no longer treats the fee as paid the moment the applicant clicks through. Applicants transfer to amaravisa’s HDFC account, upload a receipt, and submit the application. Staff confirm the UTR on the case Payment tab before the case is treated as paid.
 
 ## For applicants (customer site)
 

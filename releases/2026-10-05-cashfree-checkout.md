@@ -1,7 +1,7 @@
 # Release note — Cashfree checkout
 
 **Date:** 5 October 2026
-**Audience:** AmaraVisa operations and leadership
+**Audience:** amaravisa operations and leadership
 
 ## What changed
 

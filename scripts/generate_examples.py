@@ -236,7 +236,7 @@ BODY_OVERRIDES = {
     },
     "Verify2FAIn": {"temp_token": DUMMY_JWT, "code": "123456"},
     "TwoFactorCodeIn": {"code": "123456"},
-    "TwoFactorGenerateIn": {"issuer": "AmaraVisa CRM"},
+    "TwoFactorGenerateIn": {"issuer": "amaravisa CRM"},
     "ChangePasswordIn": {
         "current_password": "Test@123",
         "new_password": "NewPass@123",
@@ -414,7 +414,7 @@ RESPONSE_OVERRIDES = {
     },
     ("post", "/api/auth/staff/2fa/generate"): {
         "secret": "JBSWY3DPEHPK3PXP",
-        "otpauth_uri": "otpauth://totp/AmaraVisa:staff@example.com?secret=JBSWY3DPEHPK3PXP",
+        "otpauth_uri": "otpauth://totp/amaravisa:staff@example.com?secret=JBSWY3DPEHPK3PXP",
         "qr_data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB",
     },
     ("post", "/api/auth/staff/2fa/enable"): {"ok": True, "two_factor_enabled": True},
@@ -750,7 +750,7 @@ def build() -> dict:
             }
             apis.append(entry)
     return {
-        "title": "AmaraVisa API examples",
+        "title": "amaravisa API examples",
         "base_url": "http://127.0.0.1:8000",
         "generated_from": "openapi/openapi.json + route/model review",
         "note": "Illustrative success payloads for integration. Not a production HAR. Errors typically return {\"detail\": \"...\"}.",

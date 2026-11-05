@@ -1,7 +1,7 @@
 # Release note — Apply continue React hooks fix
 
 **Date:** 5 October 2026  
-**Audience:** AmaraVisa engineering and operations
+**Audience:** amaravisa engineering and operations
 
 ## What changed
 

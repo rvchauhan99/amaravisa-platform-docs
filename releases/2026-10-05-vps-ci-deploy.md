@@ -2,7 +2,7 @@
 
 ## Summary
 
-GitHub Actions no longer deploys the Passage API to Cloud Run. Push to `main` builds and recreates `amaravisa-api` on the AmaraVisa VPS behind `https://api.amaravisa.com`.
+GitHub Actions no longer deploys the Passage API to Cloud Run. Push to `main` builds and recreates `amaravisa-api` on the amaravisa VPS behind `https://api.amaravisa.com`.
 
 ## Why
 
