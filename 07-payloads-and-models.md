@@ -127,8 +127,17 @@ Passport numbers are encrypted at rest and masked on list.
 ### VisaProductFieldIn / PassportProductFieldIn
 `field_key`, `label?`, `field_type?` (`text` | `date` | `dropdown` | `number` | `file`), `required?`, `options?`, `validation_regex?`, `display_order`
 
-### VisaProductFeesIn / PassportProductFeesIn
-`govt_fee`, `service_fee`, `currency` (default `INR`)
+### VisaProductFeesIn
+`govt_fee`, `service_fee`, `currency` (default `INR`), `reason` (required, 10–500 chars after strip — shown on the public fee change history page)
+
+### PassportProductFeesIn
+`govt_fee`, `service_fee`, `currency` (default `INR`) — passport fees do not yet require a public reason
+
+### Fee change log response (`GET /api/visa-products/fee-change-log`)
+- Query: `country?` (ISO-3), `search?` / `q?` (code or country name)
+- `country`: `{ code, name, flag }` or `null` when unresolved
+- `items[]`: `changed_at`, `product_id`, `product_title`, `visa_type`, `fee_type` (`govt_fee` | `service_fee`), `from_amount`, `to_amount`, `difference`, `currency`, `reason` (legacy rows without stored reason use `Fee schedule updated`)
+- Derived by diffing consecutive `visa_product_fees` rows per **published** product in that country
 
 ### PassportProductIn
 `title`, `passport_service_type` (`fresh` | `reissue` | `damaged` | `lost` | `minor` | `tatkal`), `processing_time_days` (default 7), `banner_image_url?`

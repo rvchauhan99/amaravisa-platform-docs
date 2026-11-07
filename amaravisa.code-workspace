@@ -1,16 +1,30 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../qa-evidence"
-		},
-		{
-			"path": "../visaconsultantcrm-backend"
-		},
-		{
-			"path": "../visaconsultantcrm-frontend"
-		}
-	]
+  "folders": [
+    {
+      "name": "platform-docs",
+      "path": "."
+    },
+    {
+      "name": "qa-evidence",
+      "path": "../qa-evidence"
+    },
+    {
+      "name": "backend",
+      "path": "../visaconsultantcrm-backend"
+    },
+    {
+      "name": "frontend",
+      "path": "../visaconsultantcrm-frontend"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.next": true,
+      "**/__pycache__": true,
+      "**/.venv": true,
+      "**/dist": true,
+      "**/.turbo": true
+    }
+  }
 }

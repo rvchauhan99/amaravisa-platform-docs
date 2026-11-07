@@ -7,7 +7,7 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · [ReDoc](http://127
 Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md).
 
 
-**50 operations** in this catalog.
+**51 operations** in this catalog.
 
 ## other
 
@@ -35,7 +35,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 |---|---|---|---|---|---|
 | POST | `/api/cases` | customer JWT | CaseDraftIn |  | Save Draft |
 | POST | `/api/cases/checkout` | customer JWT | PaymentConfirmIn |  | Checkout Confirm |
-| POST | `/api/cases/checkout/cashfree/create-order` | customer JWT | CashfreeCreateOrderIn |  | Create Cashfree Order |
+| POST | `/api/cases/checkout/cashfree/create-order` | customer JWT | CashfreeCreateOrderIn |  | Create Cashfree Payment Order |
 | POST | `/api/cases/checkout/cashfree/verify` | customer JWT | CashfreeVerifyIn |  | Verify Cashfree Payment |
 | POST | `/api/cases/checkout/create-order` | customer JWT | MockCheckoutIn |  | Create Payment Order |
 | GET | `/api/cases/drafts` | customer JWT |  |  | List Drafts |
@@ -84,7 +84,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 
 | Method | Path | Auth | Body | Query | Summary |
 |---|---|---|---|---|---|
-| GET | `/api/documents/download` | signed `token` query |  | token | Download |
+| GET | `/api/documents/download` | signed `token` query |  | token, disposition, filename | Download |
 | POST | `/api/documents/notify-upload` | customer JWT **or** `session_id` | UploadNotificationIn |  | Notify Upload |
 | POST | `/api/documents/scan-passport` | customer JWT | multipart/form-data (`file`) |  | Scan Passport |
 | GET | `/api/documents/session/{session_id}` | customer JWT **or** `session_id` |  | draft_id | Get Session Status |
@@ -97,4 +97,5 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 |---|---|---|---|---|---|
 | GET | `/api/visa-products` | public |  | country, visa_type, visa_format, documents_profile, q, complexity, travel_date, limit, offset, id | List Public Products |
 | GET | `/api/visa-products/countries` | public |  | q, limit, offset, id | List Countries |
+| GET | `/api/visa-products/fee-change-log` | public |  | country, search, q | Fee Change Log |
 | GET | `/api/visa-products/{product_id}` | public |  |  | Get Product Detail |
