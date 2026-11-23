@@ -1465,7 +1465,9 @@
       },
       "response_status": 200,
       "response_body": {
-        "ok": true
+        "ok": true,
+        "id": "11111111-1111-4111-8111-111111111111",
+        "updated_at": "2026-09-08T10:00:00+00:00"
       }
     },
     {
@@ -5267,32 +5269,15 @@
       "headers": {},
       "path_params": {},
       "query": {
-        "country": "THA",
-        "search": "THA",
-        "q": "Thailand"
+        "country": "USA",
+        "search": "sample_search",
+        "q": "usa"
       },
       "request_body": null,
       "response_status": 200,
       "response_body": {
-        "country": {
-          "code": "THA",
-          "name": "Thailand",
-          "flag": "🇹🇭"
-        },
-        "items": [
-          {
-            "changed_at": "2026-11-08T10:00:00+00:00",
-            "product_id": "11111111-1111-4111-8111-111111111111",
-            "product_title": "Thailand Tourist e-Visa",
-            "visa_type": "tourist",
-            "fee_type": "service_fee",
-            "from_amount": 800.0,
-            "to_amount": 950.0,
-            "difference": 150.0,
-            "currency": "INR",
-            "reason": "Service fee updated to ensure reliability amid high demand"
-          }
-        ]
+        "id": "11111111-1111-4111-8111-111111111111",
+        "status": "ok"
       }
     },
     {
