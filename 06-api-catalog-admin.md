@@ -5,7 +5,7 @@ User Master, Role Master, visa/passport product builders, case-number settings, 
 Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`openapi/openapi.json`](openapi/openapi.json).
 
 
-**68 operations** in this catalog.
+**73 operations** in this catalog.
 
 ## admin
 
@@ -89,6 +89,11 @@ Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · snapshot in [`open
 | DELETE | `/api/admin/visa-products/{product_id}/fields/{field_id}` | staff JWT + menu |  |  | Delete Field |
 | PATCH | `/api/admin/visa-products/{product_id}/publish` | staff JWT + menu |  |  | Publish Product |
 | PATCH | `/api/admin/visa-products/{product_id}/unpublish` | staff JWT + menu |  |  | Unpublish Product |
+| GET | `/api/admin/visa-products/{product_id}/variants` | staff JWT + menu |  |  | Admin List Variants |
+| POST | `/api/admin/visa-products/{product_id}/variants` | staff JWT + menu | VisaProductVariantIn |  | Admin Create Variant |
+| DELETE | `/api/admin/visa-products/{product_id}/variants/{variant_id}` | staff JWT + menu |  |  | Admin Deactivate Variant |
+| PATCH | `/api/admin/visa-products/{product_id}/variants/{variant_id}` | staff JWT + menu | VisaProductVariantPatchIn |  | Admin Patch Variant |
+| POST | `/api/admin/visa-products/{product_id}/variants/{variant_id}/fees` | staff JWT + menu | VisaProductFeesIn |  | Set Variant Fees |
 
 ## auth
 

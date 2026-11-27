@@ -1,5 +1,21 @@
 # Environment and hosts
 
+## Customer FE checklist (rebuild hire)
+
+Minimum env for the **public site**:
+
+| Variable | Required | Notes |
+|----------|----------|--------|
+| `NEXT_PUBLIC_BACKEND_URL` | Yes | API origin **without** `/api` |
+| `NEXT_PUBLIC_SITE_URL` | Yes for QR / SEO | Phone-reachable for Upload-from-Mobile |
+| `NEXT_PUBLIC_FIREBASE_*` | Yes for Google | `API_KEY`, `AUTH_DOMAIN`, `PROJECT_ID`, `APP_ID` |
+| `NEXT_PUBLIC_CRM_URL` | Optional | Link to staff login |
+| `NEXT_PUBLIC_SUPPORT_*` / `OFFICE_MAPS_URL` / `GA_MEASUREMENT_ID` | Optional | Contact + analytics |
+
+Do **not** put Mongo, JWT, Cashfree secrets, or bank account numbers in frontend env. Bank rows come from `GET /api/payment/bank-details`.
+
+Full tables below. Customer handbook: [09-customer-frontend-handbook.md](09-customer-frontend-handbook.md).
+
 ## Local
 
 | Service | URL |

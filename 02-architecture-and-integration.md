@@ -3,8 +3,8 @@
 ## One API, two clients
 
 ```
-Customer site (Next.js :3000)          Staff CRM (CRA :3001)
-amaravisa.com / dash.amaravisa.com     crm.amaravisa.com
+Customer site (Next.js)                Staff CRM (CRA)
+www.amaravisa.com / dash.amaravisa.com crm.amaravisa.com
         |                                      |
         |  NEXT_PUBLIC_BACKEND_URL             |  REACT_APP_BACKEND_URL
         |  + /api                              |  + /api
@@ -12,10 +12,13 @@ amaravisa.com / dash.amaravisa.com     crm.amaravisa.com
                            |
                   Visa Consultancy API
                   FastAPI  /api/*
-                  Cloud Run passage-api
+                  api.amaravisa.com (VPS)
+                  Cloud Run = rollback only
                            |
                        MongoDB
 ```
+
+Customer rebuild handbook: [09-customer-frontend-handbook.md](09-customer-frontend-handbook.md).
 
 Both axios clients send `Authorization: Bearer <token>` when a session exists. A **401** clears the local session.
 
@@ -25,7 +28,7 @@ Both axios clients send `Authorization: Bearer <token>` when a session exists. A
 |-------------------|---------|--------------|------------|
 | Platform | Customer Next.js app | `https://www.amaravisa.com`, also `dash.amaravisa.com` in CORS | `NEXT_PUBLIC_BACKEND_URL` |
 | DASH / CRM | Staff CRA app | `https://crm.amaravisa.com` | `REACT_APP_BACKEND_URL` |
-| Connecting APIs | FastAPI | Cloud Run `passage-api` | origin only, no `/api` suffix |
+| Connecting APIs | FastAPI | `https://api.amaravisa.com` (VPS; Cloud Run rollback) | origin only, no `/api` suffix |
 
 `dash.amaravisa.com` is **not** a second API. It is an allowed browser origin for the customer app.
 
@@ -33,17 +36,20 @@ Both axios clients send `Authorization: Bearer <token>` when a session exists. A
 
 | Page | Typical APIs |
 |------|----------------|
-| `/` home catalog | `GET /api/visa-products`, `GET /api/visa-products/countries` (SSR/ISR + client). **Guaranteed Visa On** = calendar `today + processing_time_days` (no weekend/holiday skip; same formula as new-case SLA due date). |
-| `/visa/[productId]` | `GET /api/visa-products/{product_id}` — fee card links to fee change history for the product’s `country_code` |
-| `/transparency/price-change-log?search=` | Public fee change history with exact Atlys layout/UX (6 columns: Date, Fee Type, From, To, Difference, Reason — no Product column in UI). `GET /api/visa-products/fee-change-log` (`country` / `search` / `q`). Country typeahead via `GET /api/visa-products/countries`. CRM `POST /api/admin/visa-products/{id}/fees` requires `reason` (**min 10 chars**; append-only `visa_product_fees`; consecutive versions diffed into Service / Government rows). Visa product master otherwise unchanged. |
+| `/` home catalog | `GET /api/visa-products`, `GET /api/visa-products/countries` (SSR/ISR + client). **Guaranteed Visa On** = calendar `today + processing_time_days` (no weekend/holiday skip). See [11](11-customer-variants-and-pricing-ui.md). |
+| `/visa/[productId]` | `GET /api/visa-products/{product_id}` (`variant_id?`). Multi-SKU picker when `variant_count > 1` — grouping + chips in [11](11-customer-variants-and-pricing-ui.md). Fee card → fee-change history for `country_code`. Shapes: [12](12-customer-response-shapes.md). |
+| `/transparency/price-change-log?search=` | Public fee change history (columns: Date, **Plan**, Fee Type, From, To, Difference, Reason — no Product column in UI; Plan = `variant_label` or `—`). `GET /api/visa-products/fee-change-log`. |
 | `/auth` | `POST /api/auth/customer/register`, `verify-otp`, `resend-otp`, `login`, `google`, `forgot-password` |
-| `/apply/[productId]` | Dynamic steps: Party (1–6 travelers) → Details (if fields, per traveler) → Documents (if product docs, per traveler) → Review → Payment (fees × N). Payment waits on `POST /api/cases/checkout/create-order` before showing checkout UI (no bank-receipt flash while mode loads). When mode is Cashfree, shows Pay via Cashfree; when `bank_transfer`, shows HDFC NEFT details from `GET /api/payment/bank-details` (customer JWT; `branch_name` included; UPI/QR hidden when `PAYMENT_UPI_ID` empty), receipt upload (`POST /api/documents/upload?doc_key=payment_proof`), then **Submit application** via `POST /api/cases/checkout` with `payment_proof` — cases created `payment_status=pending`. Passport scan + passport fields only when `passport_scan` is on the product. **Upload from Mobile** (QR → phone capture → WebSocket/poll sync) is available for **single traveler only**; hidden when party length > 1. On Documents, the QR CTA sits above the checklist and stays sticky under the site header; step changes scroll to the step heading so the CTA is in view. Required docs are listed first (optional collapsed); progress counts required uploads only. Mobile uses a unified sticky footer (fee + Back/Save/Continue). Completed stepper steps are clickable to jump back; Review offers Edit links per section. APIs: `POST /api/cases` (`travelers[]`), `PATCH /api/cases/drafts/{id}` (customer JWT **or** `session_id` for phone), traveler add/remove, `POST /api/documents/upload` (`session_id` optional), `POST /api/documents/notify-upload`, `GET/POST /api/documents/session/{id}`, `WS /api/documents/ws/{id}`, `POST /api/documents/scan-passport`, checkout → N linked pending cases + `case_group_id` |
-| `/status/[caseId]` | `GET /api/cases/{case_id}/status` (includes `sibling_cases` / `case_group` when grouped; `payment_proof` / `payment_proof_rejection`). Pending copy + receipt re-upload (`POST /api/cases/{case_id}/payment-proof`). Receipt download only when paid. UI shows “Part of family booking (i of N)” + sibling links; document resubmit |
+| `/apply/[productId]` | Full step + payment contract: [10-customer-apply-and-checkout.md](10-customer-apply-and-checkout.md). Party → Details (if fields) → Documents (skip if none) → Review → Payment. Wait for `create-order` before Payment UI. Cashfree or bank_transfer. Mobile QR upload: single traveler only. |
+| `/status/[caseId]` | `GET /api/cases/{case_id}/status` (siblings, payment proof). See [10](10-customer-apply-and-checkout.md) status loop. |
 | `/account` | `GET/PATCH /api/customers/me`, traveler-profiles, document-vault; application cards show Family · N travelers when grouped |
+| `/coming-soon` | Marketing stub — no API |
 
 See also: [Release note — Manual bank payment and CRM confirmation](releases/2026-09-28-manual-bank-payment.md) (28 Sep 2026).
 
 ## CRM / DASH — page to API
+
+**Staff only.** Customer-site rebuilds can ignore this table.
 
 | CRM route | Typical APIs | Menu key |
 |-----------|--------------|----------|
@@ -63,7 +69,7 @@ See also: [Release note — Manual bank payment and CRM confirmation](releases/2
 | `/inbox` | `/api/crm/communications*` | `inbox` (UI) |
 | `/passport-expiry` | `/api/crm/passport-expiry*` | `passport_expiry` |
 | `/birthdays` | `GET /api/crm/birthdays` | `birthdays` |
-| `/products` | `/api/admin/visa-products*` — Product Builder Publish via `PATCH .../publish` / `GET .../can-publish`. **Zero required documents are allowed** (fees + processing time still required). Pricing tab: public fee-change `reason` required (**minimum 10 characters**, live count under the field); `POST .../fees` matches that min length. Customer `/apply` already omits the Documents step when the product has no docs. | `visa_products` |
+| `/products` | `/api/admin/visa-products*` — Product Builder tabs: Basic, Documents, Fields, **Plans & pricing** (`pb-tab-variants`). **No Pricing tab** — fees only on Plans & pricing via `POST .../variants/{id}/fees` (reason **min 10 chars**, live count). `POST .../fees` (omit `variant_id`) remains API/compat for default plan. Publish via `PATCH .../publish` / `GET .../can-publish` (**zero required docs allowed**; every active plan must have fees + processing). Multi-SKU: Basic hides validity/processing; edit plans on Plans & pricing. Customer `/visa/{id}` shows a picker only when `variant_count > 1`. Customer `/apply` omits Documents when the product has no docs. | `visa_products`, `visa_product_variants` |
 | `/passport-products` | `/api/admin/passport-products*` — same publish rules as visa (0 required docs allowed). | `passport_products` |
 | `/document-master` | `/api/admin/document-master*` | `document_master` |
 | `/field-master` | `/api/admin/field-master*` | `field_master` |

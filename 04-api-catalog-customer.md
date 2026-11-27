@@ -4,10 +4,9 @@ These endpoints power the **customer site** (Next.js) and public catalog. Base U
 
 Interactive docs: [Swagger UI](http://127.0.0.1:8000/docs) · [ReDoc](http://127.0.0.1:8000/redoc) · snapshot in [`openapi/openapi.json`](openapi/openapi.json).
 
-Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md).
+Auth column is from the live route guards (OpenAPI does not always mark security). Request body names match Pydantic models — field lists are in [07-payloads-and-models.md](07-payloads-and-models.md). **Response shapes for FE binding:** [12-customer-response-shapes.md](12-customer-response-shapes.md). Apply/checkout/variants: [09](09-customer-frontend-handbook.md) → [10](10-customer-apply-and-checkout.md) / [11](11-customer-variants-and-pricing-ui.md).
 
-
-**51 operations** in this catalog.
+**51+ operations** in this catalog (includes WebSocket upload session).
 
 ## other
 
@@ -90,6 +89,7 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | GET | `/api/documents/session/{session_id}` | customer JWT **or** `session_id` |  | draft_id | Get Session Status |
 | POST | `/api/documents/session/{session_id}/sync` | customer JWT **or** `session_id` | SessionSyncIn |  | Sync Session Documents |
 | POST | `/api/documents/upload` | customer JWT | multipart/form-data (`file`) | doc_key, session_id | Upload Document |
+| WS | `/api/documents/ws/{session_id}` | public (`session_id` in path) |  |  | Live mobile upload sync |
 
 ## visa_products
 
@@ -98,4 +98,4 @@ Auth column is from the live route guards (OpenAPI does not always mark security
 | GET | `/api/visa-products` | public |  | country, visa_type, visa_format, documents_profile, q, complexity, travel_date, limit, offset, id | List Public Products |
 | GET | `/api/visa-products/countries` | public |  | q, limit, offset, id | List Countries |
 | GET | `/api/visa-products/fee-change-log` | public |  | country, search, q | Fee Change Log |
-| GET | `/api/visa-products/{product_id}` | public |  |  | Get Product Detail |
+| GET | `/api/visa-products/{product_id}` | public |  | variant_id | Get Product Detail |

@@ -4,6 +4,8 @@ Source: `visaconsultantcrm-backend/models.py` and a few route-local Pydantic mod
 
 Machine-readable JSON Schema for many of these is in [`openapi/openapi.json`](openapi/openapi.json) under `components.schemas`.
 
+**Customer frontend Out shapes** (product detail, fee log, checkout, status, account) are documented in [12-customer-response-shapes.md](12-customer-response-shapes.md) — prefer that file when binding UI. This document remains the source for **request** models and shared enums.
+
 ## Auth
 
 ### CustomerRegisterIn
@@ -128,7 +130,18 @@ Passport numbers are encrypted at rest and masked on list.
 `field_key`, `label?`, `field_type?` (`text` | `date` | `dropdown` | `number` | `file`), `required?`, `options?`, `validation_regex?`, `display_order`
 
 ### VisaProductFeesIn
-`govt_fee`, `service_fee`, `currency` (default `INR`), `reason` (required, 10–500 chars after strip — shown on the public fee change history page)
+`govt_fee`, `service_fee`, `currency` (default `INR`), `reason` (required, 10–500 chars after strip — shown on the public fee change history page), `variant_id?` (omit → **default** variant; single-SKU compat)
+
+### VisaProductVariantIn
+`label?`, `validity_days`, `max_stay_days?`, `entry_type` (`single` | `double` | `multiple`, default `multiple`), `processing_time_days`, `is_default` (default false), `display_order` (default 0), `status` (`active` | `inactive`, default `active`)
+
+### VisaProductVariantPatchIn
+All fields optional: `label?`, `validity_days?`, `max_stay_days?`, `entry_type?`, `processing_time_days?`, `is_default?`, `display_order?`, `status?`
+
+### Variant public shape (on catalog / schema)
+`id`, `visa_product_id`, `label`, `validity_days`, `max_stay_days?`, `entry_type`, `processing_time_days`, `is_default`, `display_order`, `status`, `fees?` (`govt_fee`, `service_fee`, `currency`)
+
+**Compatibility:** every product has ≥1 **default active** variant after migration `015`. Product-level `validity_days` / `processing_time_days` / `fees` remain populated from the default variant. Multi-SKU UX is opt-in when `variant_count > 1`.
 
 ### PassportProductFeesIn
 `govt_fee`, `service_fee`, `currency` (default `INR`) — passport fees do not yet require a public reason
@@ -136,8 +149,8 @@ Passport numbers are encrypted at rest and masked on list.
 ### Fee change log response (`GET /api/visa-products/fee-change-log`)
 - Query: `country?` (ISO-3), `search?` / `q?` (code or country name)
 - `country`: `{ code, name, flag }` or `null` when unresolved
-- `items[]`: `changed_at`, `product_id`, `product_title`, `visa_type`, `fee_type` (`govt_fee` | `service_fee`), `from_amount`, `to_amount`, `difference`, `currency`, `reason` (legacy rows without stored reason use `Fee schedule updated`)
-- Derived by diffing consecutive `visa_product_fees` rows per **published** product in that country
+- `items[]`: `changed_at`, `product_id`, `product_title`, `visa_type`, `variant_id?`, `variant_label?`, `fee_type` (`govt_fee` | `service_fee`), `from_amount`, `to_amount`, `difference`, `currency`, `reason` (legacy rows without stored reason use `Fee schedule updated`)
+- Derived by diffing consecutive `visa_product_fees` rows **per variant stream** for each published product in that country
 
 ### PassportProductIn
 `title`, `passport_service_type` (`fresh` | `reissue` | `damaged` | `lost` | `minor` | `tatkal`), `processing_time_days` (default 7), `banner_image_url?`
@@ -162,10 +175,10 @@ Passport numbers are encrypted at rest and masked on list.
 ## Cases
 
 ### CaseDraftIn
-`visa_product_id`, `traveler` (object — primary / legacy), `travelers?` (array of party members, 1–6; each may include traveler fields plus `id?`, `field_values?`, `document_uploads?`), `field_values` (object — primary), `document_uploads[]` (`doc_key`, `file_url`, `filename`). When `travelers` is omitted, singular `traveler` creates a one-member party.
+`visa_product_id`, `variant_id?` (omit → server resolves **default** active variant — single-SKU compat), `traveler` (object — primary / legacy), `travelers?` (array of party members, 1–6; each may include traveler fields plus `id?`, `field_values?`, `document_uploads?`), `field_values` (object — primary), `document_uploads[]` (`doc_key`, `file_url`, `filename`). When `travelers` is omitted, singular `traveler` creates a one-member party.
 
 ### CaseDraftPatchIn
-same optional fields plus `step?`, `active_traveler_id?`, `travelers?`
+same optional fields plus `step?`, `active_traveler_id?`, `travelers?`, `variant_id?`
 
 ### MockCheckoutIn
 `draft_id`, `outcome`: `success` | `failure`

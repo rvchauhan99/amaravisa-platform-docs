@@ -7,13 +7,14 @@
 Public page **`/transparency/price-change-log`** (exact Atlys fee-change UI/UX parity; amaravisa brand):
 
 - Search a destination (“Where to”) by country name or ISO-3 code (e.g. `VNM`)
-- Table matches Atlys **6 columns**: Date, Fee Type (Service / Government pills), From, To, Difference, Reason — Product is not shown (API may still return `product_*` for internal use)
+- Table columns: Date, **Plan** (`variant_label` or `—`), Fee Type (Service / Government pills), From, To, Difference, Reason — Product is not shown (API may still return `product_*` for internal use)
 - Linked from the footer (**Fee change history**) and from the visa detail fee card
-- Visa product master is unchanged except append-only fee rows + required public `reason` on CRM pricing save
+- Visa product master is unchanged except append-only fee rows + required public `reason` on plan fee save
+- Fee streams are **per plan (`variant_id`)**; UI **Plan** column shows `variant_label`
 
 ## How fees are tracked
 
-CRM Product Builder **Pricing** tab now requires a **public reason** (min 10 characters) on every “Save new pricing”. Each save appends a new `visa_product_fees` row (`reason`, `created_by`). The public API diffs consecutive versions per published product and emits one row per changed fee type.
+CRM Product Builder **Plans & pricing** (not a separate Pricing tab) requires a **public reason** (min 10 characters) on every fee save. Each save appends a new `visa_product_fees` row (`reason`, `created_by`, `variant_id`). The public API diffs consecutive versions **per variant stream** and emits one row per changed fee type.
 
 Legacy fee rows without a stored reason display **Fee schedule updated**.
 
